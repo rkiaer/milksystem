@@ -1,0 +1,410 @@
+<%@ Page Language="VB" AutoEventWireup="false" CodeFile="lst_custo_financeiro_relatorioold.aspx.vb" Inherits="lst_custo_financeiro_relatorioold" %>
+
+<%@ Register Assembly="RK.TextBox.AjaxOnlyNumbers" Namespace="RK.TextBox.AjaxOnlyNumbers"
+    TagPrefix="cc4" %>
+
+<%@ Register Assembly="RK.TextBox.AjaxOnlyDate" Namespace="RK.TextBox.AjaxOnlyDate"
+    TagPrefix="cc3" %>
+
+<%@ Register Assembly="RK.TextBox.AjaxCNPJ" Namespace="RK.TextBox.AjaxCNPJ" TagPrefix="cc2" %>
+
+<%@ Register Assembly="RK.Ajax.AlertControl" Namespace="RK.Ajax.AlertControl" TagPrefix="cc1" %>
+
+<%@ Register Assembly="Anthem" Namespace="Anthem" TagPrefix="anthem" %>
+<%@ Register Assembly="RK.TextBox.AjaxOnlyDecimal" Namespace="RK.TextBox.AjaxOnlyDecimal"
+    TagPrefix="cc6" %>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<HTML>
+	<HEAD>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<title>Custo Financeiro - Flash</title>
+		<LINK href="css/estilo.css" type="text/css" rel="stylesheet"/>
+	
+<script language="javascript" type="text/javascript">
+// <!CDATA[
+
+function Table2_onclick() {
+
+}
+
+// ]]>
+</script>
+</HEAD>
+	<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+	<script type="text/javascript"> 
+
+    function ShowDialogTecnico() 
+    
+    {
+        
+        var retorno="";
+   	    var szUrl;
+        var hf_id_tecnico = document.getElementById("hf_id_tecnico");
+           	     
+        szUrl = 'lupa_tecnico.aspx';
+        retorno = window.showModalDialog(szUrl, "",'help:no;status:no;scroll:yes;edge:raised;dialogWidth:500px;edge:raised;dialogHeight:400px')
+        if (retorno!="" && retorno!=null)
+            {
+                hf_id_tecnico.value=retorno;
+                //alert(retorno);
+            } 
+         
+    }            
+    </script>
+<script type="text/javascript"> 
+
+    function ShowDialogProdutor() 
+    
+    {
+        
+        var idcboestabel;
+        var retorno="";
+   	    var szUrl;
+        var hf_id_pessoa = document.getElementById("hf_id_pessoa");
+
+   	     
+        //idcboestabel = document.getElementById("cbo_estabelecimento").value;
+        
+        //if (idcboestabel == "0")
+        //{
+        //   alert("O estabelecimento deve ser informado!");
+        //}
+        //else
+        {
+   	        //szUrl = 'lupa_produtor.aspx?id='+idcboestabel+'';
+   	        szUrl = 'lupa_produtor.aspx';
+            
+            retorno = window.showModalDialog(szUrl, "",'help:no;status:no;scroll:yes;edge:raised;dialogWidth:500px;edge:raised;dialogHeight:400px')
+            if (retorno!="" && retorno!=null)
+            {
+                hf_id_pessoa.value=retorno;
+            } 
+
+         }
+    }            
+</script>
+<script type="text/javascript"> 
+
+    function ShowDialogPropriedade() 
+    
+    {
+        
+        var idcboestabel;
+        var retorno="";
+   	    var szUrl;
+        var hf_id_propriedade = document.getElementById("hf_id_propriedade");
+        var cd_pessoa=document.getElementById("txt_cd_pessoa").value;
+   	     
+        //idcboestabel = document.getElementById("cbo_estabelecimento").value;
+        
+        //if (idcboestabel == "0")
+        //{
+        //    alert("O estabelecimento deve ser informado!");
+        //}
+        //else
+        {
+   	        
+            //szUrl = 'lupa_propriedade.aspx?id_estabelecimento='+idcboestabel+'&cd_pessoa='+cd_pessoa+'';
+            szUrl = 'lupa_propriedade.aspx?&cd_pessoa='+cd_pessoa+'';
+            
+            retorno = window.showModalDialog(szUrl, "",'help:no;status:no;scroll:yes;edge:raised;dialogWidth:500px;edge:raised;dialogHeight:400px')
+            if (retorno!="" && retorno!=null)
+            {
+                hf_id_propriedade.value=retorno;
+            } 
+        }
+    }            
+</script>
+
+		<form id="form1" method="post" runat="server">
+
+
+			<TABLE id="Table1" cellSpacing="0" cellPadding="0" width="100%" border="0">
+				<TR>
+					<TD style="width: 9px; height: 25px;">&nbsp;</TD>
+					<TD class="faixafiltro1" style="background-image: url(img/tab_dim.gif); height: 25px;"><STRONG>Custo Financeiro - Relatório</STRONG></TD>
+					<TD style="width: 10px; height: 25px;">&nbsp;</TD>
+				</TR>
+				<TR>
+					<TD style="HEIGHT: 28px; width: 9px;">&nbsp;</TD>
+					<TD style="HEIGHT: 28px; " vAlign="middle" background="img/faixa_filro.gif"></TD>
+					<TD style="HEIGHT: 28px; width: 10px;">&nbsp;</TD>
+				</TR>
+				<TR>
+					<TD style="width: 9px">&nbsp;</TD>
+					<TD id="td_pesquisa" runat="server" class="texto" ><BR>
+						<TABLE class="borda" id="Table2" cellSpacing="0" cellPadding="0" width="100%" border="0" onclick="return Table2_onclick()">
+                            <tr>
+                                <td align="right" colspan="1" style="height: 3px; width:20%">
+                                </td>
+                                <td align="left" colspan="2" style="height: 3px">
+                                </td>
+                                <td align="right" style="height: 3px">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <TD style="HEIGHT: 20px; " align="right">
+                                    <strong><span style="color: #ff0000">*</span></strong>Ano:</td>
+                                <TD style="HEIGHT: 20px; " colspan="2">
+                                    &nbsp;
+                                    <cc4:OnlyNumbersTextBox ID="txt_ano" runat="server" AutoUpdateAfterCallBack="True"
+                                        CssClass="texto" MaxLength="4" Width="80px" AutoPostBack="True"></cc4:OnlyNumbersTextBox>
+                                    (aaaa)<anthem:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txt_ano"
+                                        CssClass="texto" ErrorMessage="Preencha o campo Ano para continuar."
+                                        Font-Bold="True" ValidationGroup="gv_estabel">[!]</anthem:RequiredFieldValidator><anthem:RangeValidator
+                                            ID="RangeValidator1" runat="server" ControlToValidate="txt_ano" CssClass="texto"
+                                            ErrorMessage="O campo ANO deve ter 4 dígitos númericos." MaximumValue="3000"
+                                            MinimumValue="2020" ToolTip="Ano deve ter 4 dígitos numéricos a partir de 2020."
+                                            Type="Integer" ValidationGroup="gv_estabel">[!]</anthem:RangeValidator><asp:CustomValidator
+                                                ID="cv_custo" runat="server" CssClass="texto" ErrorMessage="CustomValidator"
+                                                ValidationGroup="gv_estabel">[!] </asp:CustomValidator></td>
+                                <td style="height: 20px">
+                                    &nbsp;Nr Execução Cálculo Projetado:
+                                    <anthem:Label ID="lbl_execucao" runat="server" AutoUpdateAfterCallBack="True" UpdateAfterCallBack="True"></anthem:Label></td>
+                                       
+                            </tr>
+<tr>
+                                <td align="right" colspan="1" style="height: 31px">
+                                </td>
+                                <td align="left" colspan="2" style="height: 31px">
+                                    &nbsp;
+                                    </td>
+                                <td align="center" style="height: 31px" valign="bottom">
+                                    <anthem:imagebutton id="btn_pesquisa" runat="server" imageurl="img/bnt_pesquisa.gif" ValidationGroup="gv_estabel"></anthem:imagebutton>
+                                    &nbsp;&nbsp;
+                                    <anthem:ImageButton ID="btn_exportar" runat="server" ImageUrl="~/img/bnt_exportar.gif"
+                                        ValidationGroup="gv_estabel" />
+                                    &nbsp;&nbsp;
+                                    <anthem:imagebutton id="btn_limparFiltros" runat="server" imageurl="img/btn_limparfiltro.gif"></anthem:imagebutton></td>
+                            </tr>
+						</TABLE>
+					</TD>
+					<TD >&nbsp;</TD>
+				</TR>
+				<TR>
+					<TD style="HEIGHT: 28px; width: 9px;">&nbsp;</TD>
+					<TD class="faixafiltro1a" style="HEIGHT: 28px; font-size: xx-small;" vAlign="middle" background="img/faixa_filro.gif">
+						&nbsp;&nbsp;Data Execução do Último Cálculo Projetado:
+                        <anthem:Label ID="lbl_calculoprojetado" runat="server" AutoUpdateAfterCallBack="True"
+                            UpdateAfterCallBack="True"></anthem:Label></TD>
+					<TD style="HEIGHT: 28px; width: 10px;">&nbsp;</TD>
+				</TR>
+				
+				<TR>
+					<TD style="width: 9px">&nbsp;</TD>
+					<TD >
+                        <br />
+                        <anthem:GridView ID="gridVolume" runat="server"
+                            AutoGenerateColumns="False" CellPadding="3"
+                            Font-Names="Verdana" Font-Size="XX-Small" AutoUpdateAfterCallBack="True" Width="100%" UpdateAfterCallBack="True" PageSize="20" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
+<FooterStyle BackColor="White" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#000066"></FooterStyle>
+
+<HeaderStyle HorizontalAlign="Center" BackColor="#006699" Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="White"></HeaderStyle>
+
+<PagerStyle HorizontalAlign="Left" BackColor="White" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#000066"></PagerStyle>
+<Columns>
+<asp:BoundField DataField="ds_descricao" HeaderText="Volumes por Cluster" ReadOnly="True">
+
+</asp:BoundField>
+<asp:BoundField DataField="mes1" DataFormatString="{0:N0}" HeaderText="JAN">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes2" DataFormatString="{0:N0}" HeaderText="FEV">
+<HeaderStyle Wrap="True"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes3" DataFormatString="{0:N0}" HeaderText="MAR">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes4" DataFormatString="{0:N0}" HeaderText="ABR">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes5" DataFormatString="{0:N0}" HeaderText="MAI" ReadOnly="True">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes6" DataFormatString="{0:N0}" HeaderText="JUN">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes7" DataFormatString="{0:N0}" HeaderText="JUL">
+<ItemStyle HorizontalAlign="Right" Font-Bold="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes8" DataFormatString="{0:N0}" HeaderText="AGO">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes9" DataFormatString="{0:N0}" HeaderText="SET">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes10" DataFormatString="{0:N0}" HeaderText="OUT" ReadOnly="True">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes11" DataFormatString="{0:N0}" HeaderText="NOV">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes12" DataFormatString="{0:N0}" HeaderText="DEZ">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="nr_total_ano" DataFormatString="{0:N0}" HeaderText="Total">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:TemplateField HeaderText="seq" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_seq" runat="server" __designer:wfdid="w25" Text='<%# Bind("seq") %>'></asp:Label>
+</ItemTemplate>
+</asp:TemplateField>
+</Columns>
+
+<SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White"></SelectedRowStyle>
+
+<RowStyle ForeColor="#000066"></RowStyle>
+</anthem:GridView>
+                        <anthem:gridview id="gridPreco" runat="server" autogeneratecolumns="False" autoupdateaftercallback="True"
+                            backcolor="White" bordercolor="#CCCCCC" borderstyle="None" borderwidth="1px"
+                            cellpadding="3" font-names="Verdana" font-size="XX-Small" pagesize="20" updateaftercallback="True"
+                            width="100%">
+<FooterStyle BackColor="White" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#000066"></FooterStyle>
+
+<HeaderStyle HorizontalAlign="Center" BackColor="#006699" Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="White"></HeaderStyle>
+
+<PagerStyle HorizontalAlign="Left" BackColor="White" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#000066"></PagerStyle>
+<Columns>
+<asp:BoundField DataField="ds_cluster" HeaderText="cluster" ShowHeader="False">
+<ItemStyle HorizontalAlign="Center" Width="10%"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="ds_descricao" HeaderText="Composi&#231;&#227;o do Pre&#231;o" ReadOnly="True">
+<ItemStyle Wrap="False" Width="12%"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes1" DataFormatString="{0:N0}" HeaderText="JAN">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes2" DataFormatString="{0:N0}" HeaderText="FEV">
+<HeaderStyle Wrap="True"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes3" DataFormatString="{0:N0}" HeaderText="MAR">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes4" DataFormatString="{0:N0}" HeaderText="ABR">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes5" DataFormatString="{0:N0}" HeaderText="MAI" ReadOnly="True">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes6" DataFormatString="{0:N0}" HeaderText="JUN">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes7" DataFormatString="{0:N0}" HeaderText="JUL">
+<ItemStyle HorizontalAlign="Right" Font-Bold="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes8" DataFormatString="{0:N0}" HeaderText="AGO">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes9" DataFormatString="{0:N0}" HeaderText="SET">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes10" DataFormatString="{0:N0}" HeaderText="OUT" ReadOnly="True">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes11" DataFormatString="{0:N0}" HeaderText="NOV">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes12" DataFormatString="{0:N0}" HeaderText="DEZ">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="nr_total_ano" DataFormatString="{0:N0}" HeaderText="Total">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:TemplateField HeaderText="seq" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_seq" runat="server" __designer:wfdid="w21" Text='<%# Bind("seq") %>'></asp:Label>
+</ItemTemplate>
+</asp:TemplateField>
+</Columns>
+
+<SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White"></SelectedRowStyle>
+
+<RowStyle ForeColor="#000066"></RowStyle>
+</anthem:gridview>
+                        <anthem:gridview id="gridOutrosCustos" runat="server" autogeneratecolumns="False" autoupdateaftercallback="True"
+                            backcolor="White" bordercolor="#CCCCCC" borderstyle="None" borderwidth="1px"
+                            cellpadding="3" font-names="Verdana" font-size="XX-Small" pagesize="20" updateaftercallback="True"
+                            width="100%">
+<FooterStyle BackColor="White" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#000066"></FooterStyle>
+
+<HeaderStyle HorizontalAlign="Center" BackColor="#006699" Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="White"></HeaderStyle>
+
+<PagerStyle HorizontalAlign="Left" BackColor="White" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#000066"></PagerStyle>
+<Columns>
+<asp:BoundField DataField="ds_descricao" HeaderText="Outros Custos" ReadOnly="True">
+<HeaderStyle Font-Bold="True" ></HeaderStyle>
+
+<ItemStyle Wrap="False" Width="22%"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes1" DataFormatString="{0:N2}" HeaderText="JAN">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes2" DataFormatString="{0:N2}" HeaderText="FEV">
+<HeaderStyle Wrap="True"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes3" DataFormatString="{0:N2}" HeaderText="MAR">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes4" DataFormatString="{0:N2}" HeaderText="ABR">
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes5" DataFormatString="{0:N2}" HeaderText="MAI" ReadOnly="True">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes6" DataFormatString="{0:N2}" HeaderText="JUN">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes7" DataFormatString="{0:N2}" HeaderText="JUL">
+<ItemStyle HorizontalAlign="Right" Font-Bold="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes8" DataFormatString="{0:N2}" HeaderText="AGO">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes9" DataFormatString="{0:N2}" HeaderText="SET">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes10" DataFormatString="{0:N2}" HeaderText="OUT" ReadOnly="True">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes11" DataFormatString="{0:N2}" HeaderText="NOV">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="mes12" DataFormatString="{0:N2}" HeaderText="DEZ">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="nr_total_ano" DataFormatString="{0:N2}" HeaderText="Total">
+<ItemStyle HorizontalAlign="Right" Wrap="False"></ItemStyle>
+</asp:BoundField>
+<asp:TemplateField HeaderText="seq" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_seq" runat="server" __designer:wfdid="w21" Text='<%# Bind("seq") %>'></asp:Label>
+</ItemTemplate>
+</asp:TemplateField>
+</Columns>
+
+<SelectedRowStyle BackColor="#669999" Font-Bold="True" ForeColor="White"></SelectedRowStyle>
+
+<RowStyle ForeColor="#000066"></RowStyle>
+</anthem:gridview>
+										</TD>
+					<TD style="width: 10px">&nbsp;</TD>
+				</TR>
+				<TR>
+					<TD style="height: 19px; width: 9px;">&nbsp;</TD>
+					<TD vAlign="top" align="center"  >&nbsp;</TD>
+					<TD style="height: 19px; width: 10px;">&nbsp;</TD>
+				</TR>
+			</TABLE>
+            <cc1:alertmessages id="messageControl" runat="server"></cc1:alertmessages><anthem:ValidationSummary ID="validatorSummary" runat="server" ShowMessageBox="True"
+                ShowSummary="False" ValidationGroup="gv_estabel"  AutoUpdateAfterCallBack="true" />
+                	    <div visible="false">
+                            &nbsp;</div>
+		</form>
+	</body>
+</HTML>

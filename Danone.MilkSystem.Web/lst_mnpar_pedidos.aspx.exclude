@@ -1,0 +1,247 @@
+<%@ page language="VB" autoeventwireup="false" inherits="lst_mnpar_pedidos, App_Web_e-egtfut" %>
+
+<%@ Register Assembly="RK.Ajax.AlertControl" Namespace="RK.Ajax.AlertControl" TagPrefix="cc1" %>
+<%@ Register Assembly="RK.TextBox.AjaxOnlyNumbers" Namespace="RK.TextBox.AjaxOnlyNumbers" TagPrefix="cc3" %>
+
+<%@ Register Assembly="Anthem" Namespace="Anthem" TagPrefix="anthem" %>
+
+<!DOCTYpE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta name="keywords" content="Danone, Danone Brasil, DANLEITE, Produtores Danone" />
+<meta name="description" content="Extranet Danone voltado para Produtores e Tecnicos" />
+<meta name="author" content="RK Sistemas e automação" />
+<title>DANONE BRASIL - DANLEITE</title>
+<link rel="stylesheet" href="css/estilo(site).css" type="text/css"  />
+<style type="text/css"> </style>
+</head>
+
+<body>
+<form runat="server" method="post" id="lst_mnpar_pedidos" >
+<!-- início do container -->
+<div id="container">
+    <div id="topo">
+        <h1><a >Danone Brasil</a></h1>
+        <ul id="menu_sec">
+        <li><a href="frm_home.aspx">Home</a> </li>
+        <li id="lisair" runat="server" visible="false">|  
+            <anthem:LinkButton ID="lk_sair" runat="server" AutoUpdateAfterCallBack="True">Sair</anthem:LinkButton> </li>
+</ul>
+        <ul id="menu">
+            <li id="menu_espacoprodutor"><a  href="frm_mnprod_produtor.aspx">Espaço Produtor</a></li>
+            <!--<li id="menu_empresa"><a  href="frm_mnemp_grupo.aspx" style="left: 0px; top: 0px">Empresa</a></li>
+            <li id="menu_sustentabilidade"><a   href="frm_mnsus_meioambiente.aspx">Sustentabilidade</a></li>
+            <li id="menu_revista"><a   href="frm_mnrev_revista.aspx">Revista 'Danone no Campo'</a></li>
+            <li id="menu_produtor"><a  href="frm_mnprod_produtor.aspx">Espaço Produtor</a></li>
+            <li id="menu_tecnico"><a   href="frm_mntec_tecnico.aspx">Espaço Técnico</a></li>-->
+            <li id="menu_parceiro"><a  class="ativa" href="frm_mnpar_parceiros.aspx">Parceiros</a></li>
+        </ul>
+
+       <ul id="acesso_rapido">
+            <!--<li><a id="receitas" >Eventos</a> </li>-->
+            <li><a id="identificacao" >
+                <anthem:Label ID="lbl_nm_produtor" runat="server" AutoUpdateAfterCallBack="True"
+                    CssClass="textoidentificacao" UpdateAfterCallBack="True"></anthem:Label></a> </li>
+            <!--<li><a id="fale" href="frm_fale_conosco.aspx">Fale Conosco</a> </li>-->
+        </ul><!-- fim do topo -->
+
+        <!-- fim do topo --></div>
+    <div class="empresa2" id="corpo"><!-- início da esq -->
+        <div id="esq"><!-- início do submenu -->
+            <div id="submenu">
+                <ul>
+                <!--<li><a  class="tip "  href="frm_mnprod_publicacoes.aspx" style="width: 144px">Publicações Importantes</a> </li>
+                <li><a class="tip " href="frm_mnprod_login.aspx">Qualidade</a> </li>-->
+
+                    <li>
+                        <a class="tip ativa" href="lst_mnpar_pedidos.aspx">Pedidos Em Aprovação</a>
+                    </li> 
+  
+              
+                </ul>
+                <!--<li><a class="tip" href="empresa.php?secao=imprensa">Imprensa</a> 
+                <li><a class="tip" href="empresa.php?secao=historia">História do Iogurte</a> 
+                <li><a class="tip" href="empresa.php?secao=links">Links</a> </li></ul><!-- fim do submenu -->
+            </div><!-- início do menu_marcas -->
+            <div id="menu_marcas">
+                <div class="botoes"></div>
+                <div id="mask"><!-- inÃ­cio do box -->
+                    <div id="box" style="LEFT: 0px; WIDTH: 100%">
+                    </div>
+                </div>
+                <div class="botoes"></div>
+            </div>
+        </div><!--início da interna-->
+        <div id="internaprocessos" >
+                
+                <table  width="100%">
+                    <tr>
+                        <td style="height: 18px;" align="left" class="sembordasleft">
+                            &nbsp;<br />
+                            &nbsp; &nbsp;&nbsp; PEDIDOS EM APROVAÇÃO</td>
+                    </tr>
+                </table>
+            <p class="borda_topo" runat="server" id="filtro" style="text-align: right; font-size: small;height: 18px;"> 
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<anthem:Button ID="btn_aceitar" runat="server" AutoUpdateAfterCallBack="True"
+                    Text="Aprovar" ToolTip="Aprovar pedidos selecionados." ValidationGroup="vg_aprovar" />&nbsp;<anthem:Button
+                        ID="btn_recusar" runat="server" AutoUpdateAfterCallBack="True" Text="Recusar" ToolTip="Recusar Pedido selecionado."
+                        ValidationGroup="vg_aprovar" />
+              </p>
+              <table width="100%" style="vertical-align: middle; text-align: center" class="bordastd">
+                     <tr >
+                        <td align="center" valign="middle" style="vertical-align: middle">
+                         <anthem:GridView ID="gridResults" runat="server" AutoGenerateColumns="False"
+                                AutoUpdateAfterCallBack="True" DataKeyNames="id_central_pedido"
+                                Font-Names="Verdana" Font-Size="Small" CellPadding="4" GridLines="None"
+                                PageSize="20" UpdateAfterCallBack="True" Width="98%" AllowSorting="True"  >
+                <FooterStyle Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small"
+                    ForeColor="White" />
+                <HeaderStyle Font-Bold="True" Font-Names="Verdana" ForeColor="White" HorizontalAlign="Left" />
+                <EditRowStyle BackColor="#2461BF" />
+                <PagerStyle BackColor="#7596C6" Font-Names="Verdana" ForeColor="White" />
+                <AlternatingRowStyle BackColor="#7596C6" Font-Bold="True" />
+                                <Columns>
+                                    <asp:TemplateField>
+                                        <headertemplate>
+<TABLE class="sembordas" width="100%"><TBODY>
+<TR><TD style="WIDTH: 50%; TEXT-ALIGN: left" class="sembordas" align=left>
+<asp:CheckBox id="chk_selecao_todos" runat="server" __designer:wfdid="w74" BorderStyle="None" OnCheckedChanged="chk_selecao_todos_CheckedChanged" AutoPostBack="True"></asp:CheckBox></TD><TD style="WIDTH: 100px" class="sembordas" align=left></TD></TR></TBODY></TABLE>
+</headertemplate>
+                                        <itemtemplate>
+<TABLE style="HEIGHT: 1px" class="sembordas" width="100%">
+<TBODY>
+<TR><TD style="FONT-WEIGHT: bold; COLOR: white" rowspan=2 class="sembordas" vAlign=top align=center>
+    <!--<asp:CheckBox id="chk_selecao1" runat="server" BorderStyle="None" OnCheckedChanged="chk_selecao_CheckedChanged" AutoPostBack="True" Checked='<%# bind("st_selecao") %>'></asp:CheckBox>-->
+        <asp:CheckBox id="chk_selecao" runat="server" BorderStyle="None" OnCheckedChanged="chk_selecao_CheckedChanged" AutoPostBack="True" Checked='<%# bind("st_selecao") %>'></asp:CheckBox>
+</TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white">Pedido:</TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white">Data: </TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white">Produtor: </TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white">Cidade: </TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white">Parcelas:</TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white">Total:</TD>
+  </TR>
+<TR>
+
+    <TD style="FONT-WEIGHT: bold; COLOR: white"><anthem:Label id="lbl_id_pedido" runat="server" Text='<%# bind("id_central_pedido") %>' __designer:wfdid="w8"></anthem:Label></TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white"><anthem:Label id="lbl_dt_pedido" runat="server" Text='<%# bind("dt_pedido") %>' __designer:wfdid="w9"></anthem:Label></TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white"><anthem:Label id="lbl_produtor" runat="server" Text='<%# bind("nm_produtor") %>' __designer:wfdid="w10"></anthem:Label></TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white"><anthem:Label id="lbl_nm_cidade" runat="server" Text='<%# bind("nm_cidade") %>' __designer:wfdid="w11"></anthem:Label></TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white"><anthem:Label id="lbl_parcelas" runat="server" Text='<%# bind("qtde_parcelas_fornecedor") %>' __designer:wfdid="w12"></anthem:Label></TD>
+    <TD style="FONT-WEIGHT: bold; COLOR: white"><anthem:Label id="lbl_nr_total_pedido" runat="server" Text='<%# bind("nr_total_pedido") %>' __designer:wfdid="w13"></anthem:Label></TD>
+  </TR>
+  <TR><TD style="FONT-SIZE: 10px; HEIGHT: 2px; BACKGROUND-COLOR: white" class="sembordas" vAlign=middle align=center colSpan=7><anthem:GridView id="gridItens" runat="server" CssClass="sembordas" Width="100%" AutoGenerateColumns="False" __designer:wfdid="w14" Height="100%" ShowHeader="False" OnRowDataBound="gridItens_RowDataBound" OnSelectedIndexChanged="gridItens_SelectedIndexChanged">
+<HeaderStyle ForeColor="White"></HeaderStyle>
+<Columns>
+<asp:BoundField DataField="nm_item" HeaderText="Item" ReadOnly="True" ShowHeader="False">
+<ItemStyle HorizontalAlign="Left"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="cd_unidade_medida" HeaderText="UM" ReadOnly="True" ShowHeader="False">
+<ItemStyle HorizontalAlign="Center"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="nr_quantidade" HeaderText="Qtde" ReadOnly="True" ShowHeader="False">
+<HeaderStyle CssClass="sembordas"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:TemplateField HeaderText="Valor" ShowHeader="False"><ItemTemplate>
+<asp:TextBox style="TEXT-ALIGN: right" id="txt_nr_valor_item" runat="server" CssClass="textosmall" Width="67px" __designer:wfdid="w7" AutoPostBack="True" OnTextChanged="txt_nr_valor_item_TextChanged"></asp:TextBox> 
+</ItemTemplate>
+
+<HeaderStyle CssClass="sembordas"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:TemplateField>
+<asp:BoundField DataField="nr_valor_total" HeaderText="Total" ShowHeader="False">
+<HeaderStyle CssClass="sembordas"></HeaderStyle>
+
+<ItemStyle HorizontalAlign="Right"></ItemStyle>
+</asp:BoundField>
+<asp:BoundField DataField="id_item" HeaderText="id_item" ReadOnly="True" ShowHeader="False" Visible="False">
+<HeaderStyle CssClass="sembordas"></HeaderStyle>
+</asp:BoundField>
+<asp:TemplateField HeaderText="id_central_pedido_item" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_id_central_pedido_item" runat="server" Text='<%# Bind("id_central_pedido_item") %>' __designer:wfdid="w472"></asp:Label>
+</ItemTemplate>
+
+<HeaderStyle CssClass="sembordas"></HeaderStyle>
+</asp:TemplateField>
+<asp:TemplateField HeaderText="nr_valor_unitario" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_nr_valor_unitario" runat="server" __designer:wfdid="w117" Text='<%# Bind("nr_valor_unitario") %>'></asp:Label>
+</ItemTemplate>
+</asp:TemplateField>
+<asp:TemplateField HeaderText="nr_sacaria" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_nr_sacaria" runat="server" __designer:wfdid="w118" Text='<%# Bind("nr_sacaria") %>'></asp:Label> 
+</ItemTemplate>
+</asp:TemplateField>
+<asp:TemplateField HeaderText="nr_frete" ShowHeader="False" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_nr_frete" runat="server" __designer:wfdid="w119" Text='<%# Bind("nr_frete") %>'></asp:Label> 
+</ItemTemplate>
+</asp:TemplateField>
+<asp:TemplateField HeaderText="nr_valor_fornecedor" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_nr_valor_fornecedor" runat="server" __designer:wfdid="w258" Text='<%# Bind("nr_valor_fornecedor") %>'></asp:Label>
+</ItemTemplate>
+</asp:TemplateField>
+<asp:TemplateField HeaderText="st_alteracao" Visible="False"><ItemTemplate>
+<asp:Label id="lbl_st_alteracao" runat="server" __designer:wfdid="w260" Text='<%# Bind("st_alteracao") %>'></asp:Label>
+</ItemTemplate>
+</asp:TemplateField>
+</Columns>
+</anthem:GridView></TD></TR></TBODY></TABLE>
+</itemtemplate>
+
+                   
+ 
+                         <headerstyle font-bold="True"  horizontalalign="Left" />
+                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="id_central_pedido" Visible="False">
+                                        <itemtemplate>
+<asp:Label id="lbl_id_central_pedido" runat="server" Text='<%# Bind("id_central_pedido") %>' __designer:wfdid="w55"></asp:Label> 
+</itemtemplate>
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="st_selecao" Visible="False">
+                                        <itemtemplate>
+<asp:Label id="lbl_st_selecao" runat="server" Text='<%# Bind("st_selecao") %>' __designer:wfdid="w75"></asp:Label>
+</itemtemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" />
+                <RowStyle BackColor="#7596C6" Font-Bold="True" Font-Overline="False" Wrap="True" Font-Underline="False" />
+                             <PagerSettings Visible="False" />
+                            </anthem:GridView>
+                            &nbsp;
+                            </td>
+                     </tr>
+                </table>
+                 <p style="font-size: x-small; color: red; font-style: italic; text-align: left;" class="texto">
+                <anthem:Label ID="lbl_informativo" runat="server" Visible="False" AutoUpdateAfterCallBack="True" UpdateAfterCallBack="True">*Estes dados são apenas para consulta e podem
+  sofrer alterações no decorrer do mês.</anthem:Label>&nbsp;</p>
+              <cc1:AlertMessages ID="messageControl" runat="server"></cc1:AlertMessages><anthem:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="vg_pesquisar" /> 
+        </div>
+    </div>
+    <div id="rodape">
+        <p class="aEsq"><IMG alt=Danone src="img/danleitesmall.png"><IMG alt="Danone" src="img/danone_mundial.gif">© 2016 Danone Brasil - Todos os direitos reservados
+        <BR>&nbsp; <a href="mailto:dac@danone.com">dac@danone.com</a></p>
+        <p class="aDir"><asp:HyperLink ID="hl_rk" runat="server" Font-Overline="False"
+                Font-Size="Smaller" Font-Strikeout="False" Font-Underline="True" ForeColor="Navy"
+                NavigateUrl="http://www.rkauto.com.br/home.asp" Target="_blank">RK Automação e Sistemas Personalizados</asp:HyperLink></p>
+        &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+    </div>
+
+<!-- fim do container --></div>
+    <div class="clear"></div>
+
+<!--<div style="LEFT: 0px; VISIBIliTY: hidden; pOSITION: absolute; TOp: 0px">
+<div class="tip_top"></div>
+<div class="tip"></div>
+<div class="tip_bottom"></div>
+</div>-->
+    &nbsp;
+
+
+</form>
+</BODY>
+
+</html>

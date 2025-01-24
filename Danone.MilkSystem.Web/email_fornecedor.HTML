@@ -1,0 +1,346 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Relatório CIQ</title>
+		<LINK href="css/estilo.css" type="text/css" rel="stylesheet">
+	
+
+</HEAD>
+	<body  >
+		<form id="Form1"  runat="server">
+        <div id="tudorel" style="border-right: black 1px solid; border-top: black 1px solid; border-left: black 1px solid; border-bottom: black 1px solid; vertical-align: top; text-align: center;">
+        
+            <table style="text-align: center" cellpadding="1" cellspacing="1" width="98%">
+            <tr><td style="height: 685px">
+            <table width="100%" cellpadding="1" cellspacing="0" >
+                <tr>
+                    <td width="10%" rowspan="4" style="border-right: gray 1px solid; border-top: gray 1px solid; border-left: gray 1px solid; border-bottom: gray 1px solid" align="center" valign="middle"><img  src="img/logo.gif"/></td>
+                    <td align="center" class="textosmallbold" colspan="1" style="border-right: gray 1px solid;
+                        border-top: gray 1px solid; height: 34px">
+                        &nbsp;
+                    </td>
+                    <td align="center" class="textosmallbold" colspan="2" style="border-right: gray 1px solid; border-top: gray 1px solid; height: 34px;">
+                        PEDIDO DE COMPRA</td>
+                    <td align="center" class="textosmallbold" colspan="1" style="border-right: gray 1px solid;
+                        border-top: gray 1px solid; height: 34px">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" class="textosmall" colspan="1" style="border-right: gray 1px solid;
+                        border-top: gray 1px solid; height: 5px">
+                        Data de</td>
+                    <td align="center" colspan="2" class="textosmallbold" style="border-right: gray 1px solid; height: 5px; border-top: gray 1px solid;">&nbsp;&nbsp;
+                    </td>
+                    <td align="center" class="textosmall" colspan="1" style="border-right: gray 1px solid;
+                        border-top: gray 1px solid; height: 5px">
+                        Número</td>
+                </tr>
+                <tr>
+                    <td align="center" class="textosmall" colspan="1" style="border-right: gray 1px solid;
+                        height: 5px">
+                        Emissão</td>
+                   <td align="center" colspan="2" style="border-right: gray 1px solid; height: 5px;" class="textosmallbold">
+                       Pedido Nr: $id_pedido
+                     </td>
+                    <td align="center" class="textosmall" colspan="1" style="border-right: gray 1px solid;
+                        height: 5px">
+                        Contrato</td>
+                </tr>
+                <tr>
+                    <td align="center" class="textosmall" colspan="1" style="border-right: gray 1px solid;
+                        border-bottom: gray 1px solid">
+                        $dt_pedido</td>
+                    <td align="center" colspan="2" style="border-right: gray 1px solid; border-bottom: gray 1px solid;" class="textosmallbold">
+                        &nbsp;&nbsp;
+                        </td>
+                    <td align="center" class="textosmall" colspan="1" style="border-right: gray 1px solid;
+                        border-bottom: gray 1px solid">
+                        $nr_contrato</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="4" style="height: 14px" class="texto12pt">
+                        <span class="obrigatorio"></span>
+                    </td>
+                    <td align="center" class="texto12pt" colspan="1" style="height: 14px">
+                    </td>
+                </tr>
+            </table>
+            <table width="100%" cellspacing="0" border="0" >
+                <tr>
+                    <td align="center" colspan="6" style="font-size: 11px; height: 14px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;" class="textosmall">
+                        Dados do Fornecedor</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-weight: bold; height: 15px" class="textosmall">
+                        &nbsp;$ds_fornecedor</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 30%;" class="textosmall" >
+                        $end_fornecedor</td>
+                    <td align="left" class="textosmall" style="height: 20px; width: 20%;" >
+                        $bairro_fornecedor</td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1" style="height: 20px">
+                        $cidade_fornecedor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 10%; height: 20px"
+                        width="40%">
+                        $uf_fornecedor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%; height: 20px"
+                        width="40%">
+                        $cepfornecedor</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 40%;" class="textosmall" >
+                        CNPJ/CPF: $cnpjfornecedor</td>
+                    <td align="center" class="textosmall" style="height: 20px; width: 20%;" >
+                    </td>
+                    <td align="left" class="textosmall" style="width: 10%;" rowspan="">
+                    </td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1">
+                        IE:$inscrestadualfornecedor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%" width="40%">
+                    </td>
+                </tr>
+                 <tr>
+                    <td align="left" style="height: 20px; width: 40%;" class="textosmall" >
+                        Contato: $ds_contato</td>
+                     <td align="left" class="textosmall" style="height: 20px; width: 20%;" >
+                         Email: $email</td>
+                     <td align="left" class="textosmall" style="width: 10%;" rowspan="">
+                     </td>
+                     <td align="left" class="textosmall" colspan="3" rowspan="1">
+                         Fone: $fone1 $fone2</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-size: 11px; height: 14px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;" class="textosmall">
+                        Dados para Faturamento</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-weight: bold; height: 15px" class="textosmall">
+                        &nbsp;$ds_produtor</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 30%;" class="textosmall" >
+                        $end_produtor</td>
+                    <td align="left" class="textosmall" style="height: 20px; width: 20%;" >
+                        $bairro_produtor</td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1" style="height: 20px">
+                        $cidade_produtor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 10%; height: 20px"
+                        width="40%">
+                        $uf_produtor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%; height: 20px"
+                        width="40%">
+                        $cepprodutor</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 40%;" class="textosmall" >
+                        CNPJ/CPF: $cnpjprodutor</td>
+                    <td align="center" class="textosmall" style="height: 20px; width: 20%;" >
+                    </td>
+                    <td align="left" class="textosmall" style="width: 10%;" rowspan="">
+                    </td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1">
+                        IE:$inscrestadualprodutor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%" width="40%">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 40%;" class="textosmall" >
+                        Contato: $ds_contato</td>
+                    <td align="left" class="textosmall" style="height: 20px; width: 20%;" >
+                        Email: $email</td>
+                    <td align="left" class="textosmall" style="width: 10%;" rowspan="">
+                    </td>
+                    <td align="left" class="textosmall" colspan="3" rowspan="1">
+                        Fone: $fone1 $fone2</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-size: 11px; height: 14px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;" class="textosmall">
+                        Dados para Cobrança</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 30%;" class="textosmall" >
+                        Av. Paulista 2300 5 And</td>
+                    <td align="left" class="textosmall" style="height: 20px; width: 20%;" >
+                        B Vista</td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1" style="height: 20px">
+                        São Paulo</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 10%; height: 20px"
+                        width="40%">
+                        SP</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%; height: 20px"
+                        width="40%">
+                        01310-300</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 40%;" class="textosmall" >
+                        CNPJ/CPF: 23.643.315/0001-52</td>
+                    <td align="center" class="textosmall" style="height: 20px; width: 20%;" >
+                    </td>
+                    <td align="left" class="textosmall" style="width: 10%;" rowspan="">
+                    </td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1">
+                        IE: 114584872113</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%" width="40%">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px;" class="textosmall" colspan="6" >
+                        - Enviar as duplicatas/boletos bancários para caixa postal n.72654 CEP 01405-971
+                        - São Paulo - SP</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; font-weight: bold;" class="textosmall" colspan="6" >
+                        - Enviar cópia da NF e Boleto pelo Fax nr. 35 3714-1519</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-size: 11px; height: 14px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;" class="textosmall">
+                        Dados para Entrega</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-weight: bold; height: 15px" class="textosmall">
+                        &nbsp;$nm_produtor</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 30%;" class="textosmall" >
+                        $end_propriedade</td>
+                    <td align="left" class="textosmall" style="height: 20px; width: 20%;" >
+                        $bairro_propriedade</td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1" style="height: 20px">
+                        $cidade_propriedade</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 10%; height: 20px"
+                        width="40%">
+                        $uf_propriedade</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%; height: 20px"
+                        width="40%">
+                        $ceppropriedade</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px; width: 40%;" class="textosmall" >
+                        CNPJ/CPF: $cnpjprodutor</td>
+                    <td align="center" class="textosmall" style="height: 20px; width: 20%;" >
+                    </td>
+                    <td align="left" class="textosmall" style="width: 10%;" rowspan="">
+                    </td>
+                    <td align="left" class="textosmall" colspan="2" rowspan="1">
+                        IE:$inscrestadualprodutor</td>
+                    <td align="left" class="textosmall" rowspan="1" style="width: 13%" width="40%">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-size: 11px; height: 14px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;" class="textosmall">
+                        Condição de Pagamento: $dt_pagto</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-weight: bold; height: 15px" class="textosmall">
+                        <table cellpadding="0" cellspacing="0" class="textosmall" width="100%">
+                            <tr>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Cód. Item</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Par</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Descrição do Material</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Uni</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Quantidade</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Moeda</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Preço Unitário</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    % Desc</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    IPI %</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    ICMS %</td>
+                                <td style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Vl Total Item</td>
+                                <td style="border-right: gray 1px solid; font-weight: bold; border-left: gray 1px solid;
+                                    border-bottom: gray 1px solid">
+                                    Data de Entrega</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold">
+                                    $dsgrid</td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                                <td style="font-weight: bold">
+                                </td>
+                            </tr>
+                        </table>
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" class="textosmall">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="6" style="font-size: 11px; height: 14px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;" class="textosmall">
+                        <table cellpadding="0" cellspacing="0" class="textosmall" width="100%">
+                            <tr>
+                                <td align="center" class="textosmall" style="font-weight: bold; border-bottom: gray 1px solid">
+                                    Emitente</td>
+                                <td align="center" style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    1a aprovação</td>
+                                <td align="center" style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    2a Aprovação</td>
+                                <td align="center" style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    3a Aprovação</td>
+                                <td align="center" style="font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid">
+                                    Total do Pedido</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="textosmall" style="height: 15px">
+                                    Alba Paula</td>
+                                <td align="left" style="border-left: gray 1px solid; height: 15px">
+                                    Carlos Gimenez</td>
+                                <td align="left" style="border-left: gray 1px solid; height: 15px">
+                                    &nbsp;</td>
+                                <td align="left" style="font-weight: bold; border-left: gray 1px solid; height: 15px">
+                                    &nbsp;</td>
+                                <td align="center" rowspan="2" style="font-weight: bold; border-left: gray 1px solid;
+                                    height: 15px">
+                                    $nr_total_pedido</td>
+                            </tr>
+                            <tr>
+                                <td align="left" class="textosmall" style="height: 13px">
+                                    35-3729-7871</td>
+                                <td align="left" style="border-left: gray 1px solid; height: 13px">
+                                    dd/mm/aaaa</td>
+                                <td align="left" style="border-left: gray 1px solid; height: 13px">
+                                    &nbsp;</td>
+                                <td align="left" style="font-weight: bold; border-left: gray 1px solid; height: 13px">
+                                    &nbsp;</td>
+                                <td align="left" rowspan="2" style="font-weight: bold; height: 13px">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            </td></tr>
+            </table>
+            <cc7:AlertMessages ID="messagecontrol" runat="server"></cc7:AlertMessages></div>
+     </form>
+	</body>
+</HTML>

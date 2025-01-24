@@ -1,0 +1,229 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Central de Compras - Email ao Produtor</title>
+		<LINK href="css/estilo.css" type="text/css" rel="stylesheet">
+	
+
+</HEAD>
+	<body  >
+		<form id="Form1"  runat="server">
+        <div id="tudorel" style="border-right: black 1px solid; border-top: black 1px solid; border-left: black 1px solid; border-bottom: black 1px solid; vertical-align: top; text-align: center;">
+        
+            <table style="text-align: center" cellpadding="1" cellspacing="1" width="98%">
+            <tr><td >
+            <table width="100%" cellpadding="0" cellspacing="0" >
+                <tr>
+                    <td align="left" class="textosmall" style="height: 20px; font-weight: bold;">
+                        Pedido Nº $id_pedido</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall">
+                        $dt_hoje</td>
+                </tr>
+                <tr>
+                   <td align="left" class="textosmall" style="height: 20px">
+                       &nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" style="height: 20px">
+                        À</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px" class="texto12pt">
+                        $nm_produtor</td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                        $nm_propriedade (código $id_propriedade)</td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                        Fone.: $prodfone3 $prodfone4</td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                        Prezado Produtor.<br />
+                        <br />
+                        Seguem informações da sua compra junto à nossa Central de Compras:<br />
+                    </td>
+                </tr>
+            </table>
+            </td></tr>
+            </table>
+            <table class="textosmall" width="98%" border="0"  cellspacing="0" style="text-align: left; font-size: 11px; color: black; font-family: Verdana, Arial;">
+                <tr>
+                    <td style="width: 20px; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid; height: 18px;">
+                        1.</td>
+                    <td colspan="7" style="border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-bottom: gray 1px solid; height: 18px">
+                        Dados do Pedido</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        Pedido n. $id_pedido</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        Data do Pedido: $datapedido</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        Parceiro: $nm_parceiro</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        $nm_produtor ($nm_produtor)</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        $nm_propriedade (código $id_propriedade)</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        $bairro_produtor - $cidade_produtor - $nm_estado_produtor</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        CNPJ/CPF: $cnpjprodutor</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        I.E.: $inscrestadualprodutor</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        Fone: $prodfone3 $prodfone4</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;">
+                        &nbsp;</td>
+                    <td colspan="7" style="height: 17px">
+                        Contato: $ds_contato</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 32px; height: 15px;">
+                        &nbsp;&nbsp;
+                    </td>
+                    <td style="width: 35px; height: 15px;">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid; height: 18px;">
+                        2.</td>
+                    <td colspan="7" style="border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-bottom: gray 1px solid; height: 18px">
+                        Item(ns)</td>
+                </tr>
+                        $dsgriditens
+                <tr>
+                    <td style="width: 20px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 32px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 35px; height: 15px;">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 17px; border-top: gray 1px solid; font-weight: bold; border-left: gray 1px solid; border-bottom: gray 1px solid;">
+                        3.</td>
+                    <td colspan="7" style="height: 17px; border-right: gray 1px solid; border-top: gray 1px solid; font-weight: bold; border-bottom: gray 1px solid;">
+                        Condições Gerais</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 17px;">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 17px;">
+                        3.1</td>
+                    <td colspan="6" style="height: 17px">
+                        Pagamento $tipopagamento</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 14px;">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 14px;">
+                        3.2</td>
+                    <td colspan="6" style="height: 14px">
+                        Frete &nbsp;$tipofrete</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 11px">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 11px">
+                        &nbsp;</td>
+                    <td colspan="4" style="height: 11px">
+                        &nbsp;</td>
+                    <td style=" height: 11px">
+                        &nbsp;</td>
+                    <td style="height: 11px">
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 11px">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 11px">
+                        &nbsp;</td>
+                    <td colspan="4" style="height: 11px">
+                        &nbsp;</td>
+                    <td style=" height: 11px">
+                        &nbsp;</td>
+                    <td style="height: 11px">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px;">
+                        Atenciosamente,</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px;">
+                        Central de Compras Danone</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px;">
+                        central.compras@danone.com</td>
+                </tr>
+            </table>
+        </div>
+                    <cc7:AlertMessages ID="messagecontrol" runat="server"></cc7:AlertMessages>
+
+     </form>
+	</body>
+</HTML>

@@ -1,0 +1,702 @@
+<%@ PAGE language="VB" autoeventwireup="false" CodeFile="Copy of frm_central_pedido_abertura.aspx.vb" inherits="frm_central_pedido_abertura" %>
+
+<%@ Register Assembly="RK.TextBox.AjaxCPF" Namespace="RK.TextBox.AjaxCPF" TagPrefix="cc2" %>
+<%@ Register Assembly="RK.TextBox.AjaxOnlyNumbers" Namespace="RK.TextBox.AjaxOnlyNumbers"
+    TagPrefix="cc3" %>
+<%@ Register Assembly="RK.TextBox.AjaxOnlyDate" Namespace="RK.TextBox.AjaxOnlyDate"
+    TagPrefix="cc4" %>
+<%@ Register Assembly="RK.TextBox.AjaxTelephone" Namespace="RK.TextBox.AjaxTelephone"
+    TagPrefix="cc5" %>
+<%@ Register Assembly="RK.TextBox.AjaxOnlyDecimal" Namespace="RK.TextBox.AjaxOnlyDecimal"
+    TagPrefix="cc6" %>
+<%@ Register Assembly="RK.Ajax.AlertControl" Namespace="RK.Ajax.AlertControl" TagPrefix="cc7" %>
+
+<%@ Register Assembly="RK.TextBox.AjaxCNPJ" Namespace="RK.TextBox.AjaxCNPJ" TagPrefix="cc1" %>
+
+<%@ Register Assembly="Anthem" Namespace="Anthem" TagPrefix="anthem" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>Abertura Pedido</title>
+		<LINK href="css/estilo.css" type="text/css" rel="stylesheet"></link>
+</head>
+
+	<script type="text/javascript" language="javascript">
+		function clearDataFornec()
+		{
+			document.getElementById("txt_nm_fornecedor").value = "";
+		}
+	</script>
+		<script type="text/javascript" language="javascript">
+		function clearDataItem()
+		{
+			document.getElementById("txt_nm_item").value = "";
+		}
+	</script>
+	<body leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
+
+	<script type="text/javascript" > 
+
+    function ShowDialogProdutor() 
+    
+    {
+        
+        var idcboestabel;
+        var retorno="";
+   	    var szUrl;
+        var hf_id_produtor = document.getElementById("hf_id_produtor");
+
+   	     
+        idcboestabel = document.getElementById("cbo_estabelecimento").value;
+        
+        if (idcboestabel == "0")
+        {
+            alert("O estabelecimento deve ser informado!");
+        }
+        else
+        {
+   	        szUrl = 'lupa_produtor.aspx?id='+idcboestabel+'';
+            
+            retorno = window.showModalDialog(szUrl, "",'help:no;status:no;scroll:yes;edge:raised;dialogWidth:500px;edge:raised;dialogHeight:400px')
+            if (retorno!="" && retorno!=null)
+            {
+                hf_id_produtor.value=retorno;
+            } 
+
+         }
+    }    
+</script>
+ 	    <form id="Form1" method="post" runat="server">
+		    <TABLE id="Table1" cellSpacing="0" cellPadding="0" width="100%">
+				<TR>
+					<TD style="width: 7px">&nbsp;</TD>
+					<TD class="faixafiltro1" 	style="background-image: url(img/tab_dim.gif); "><STRONG>Central de Compras - Abrir Pedido</STRONG></TD>
+					<TD>&nbsp;</TD>
+				</TR>
+				<TR>
+					<TD ></TD>
+					<TD vAlign="top" align="center" class="texto">
+						<TABLE id="Table2" cellSpacing="0" cellPadding="1" width="100%"  >
+							<TR>
+								<TD class="faixafiltro1a" style=" height: 25px;" vAlign="middle" align="left"  background="img/faixa_filro.gif">
+                                    &nbsp;<asp:Image ID="img_novo" runat="server" ImageUrl="img/novo.gif" /><anthem:LinkButton
+                                        ID="lk_novo" runat="server">Novo</anthem:LinkButton>
+								</TD>
+								<TD class="faixafiltro1a" vAlign="middle" align="right" background="img/faixa_filro.gif"  >
+                                    <anthem:Image ID="img_notificacao" runat="server" ImageUrl="~/img/ico_email.gif" Visible="False" AutoUpdateAfterCallBack="True" />
+                                    &nbsp;<anthem:LinkButton ID="lk_notificar_aprovadores" runat="server" AutoUpdateAfterCallBack="True"
+                                        Enabled="False" Style="vertical-align: bottom" Visible="False" OnClick="lk_notificar_aprovadores_Click">Notificar Aprovadores </anthem:LinkButton>
+                                    |
+                                    <anthem:LinkButton ID="lk_enviar_aprovacao" runat="server" AutoUpdateAfterCallBack="True"
+                                        Enabled="False" ValidationGroup="vg_verificacoes_finais" Visible="False">Enviar Aprovação</anthem:LinkButton>&nbsp;|
+                                    <anthem:LinkButton ID="lk_gerar_pedido" runat="server" AutoUpdateAfterCallBack="True"
+                                        Style="vertical-align: bottom" ToolTip="Gerar Pedido" ValidationGroup="vg_pedido" OnClick="lk_gerar_pedido_Click">Gerar Pedido</anthem:LinkButton>
+                                    &nbsp;&nbsp;</TD>
+							</TR>
+						</TABLE>
+					</TD>
+					<TD>&nbsp;</TD>
+				</TR>
+				<TR>
+					<TD style="width: 7px">&nbsp;</TD>
+					<TD vAlign="top" >
+						<TABLE id="Table7" cellSpacing=0 cellPadding=2 width="100%">
+							<TR>
+								<TD style="HEIGHT: 15px; font-size: x-small;" class="titmodulo" align="left" colSpan="2">
+                                    Selecione o &nbsp;Produtor</TD>
+							</TR>
+                            <tr>
+                                <TD class="texto" align="left" style="height: 22px" colspan="2">
+                                    <SPAN id="Span4" class="obrigatorio"></span>&nbsp; &nbsp;
+                                    <table border="0" width="100%" style="font-size: x-small">
+                                        <tr>
+                                            <td style="width: 14%; height: 19px;" align="right">
+                                                <span style="color: #ff0000">*</span>Estabelecimento:</td>
+                                            <td align="left" style="height: 19px">
+                                                &nbsp;<anthem:DropDownList id="cbo_estabelecimento" runat="server" CssClass="texto" AutoPostBack="True" Font-Size="X-Small" AutoUpdateAfterCallBack="True"></anthem:DropDownList> 
+									<asp:RequiredFieldValidator id="RequiredFieldValidator2" runat="server" ValidationGroup="vg_abrir_cotacao" CssClass="texto" Font-Bold="True" ErrorMessage="Preencha o campo Estabelecimento para continuar." ControlToValidate="cbo_estabelecimento">[!]</asp:RequiredFieldValidator></td>
+                                            <td style="width: 12%; height: 19px;" align="right">
+                                                </td>
+                                            <td align="left" style="height: 19px">
+                                                </td>
+                                            <td style="width: 12%; height: 19px;" align="right">
+                                                </td>
+                                            <td style="width: 15%; height: 19px;" align="left">
+                                                </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" style="width: 14%; height: 18px">
+                                                <span style="color: #ff0000">*</span> Produtor:</td>
+                                            <td align="left" colspan="3" style="height: 18px">
+                                                &nbsp;<anthem:TextBox ID="txt_cd_pessoa" runat="server" AutoCallBack="true" AutoUpdateAfterCallBack="true"
+                                                    CssClass="texto" MaxLength="10" Width="72px" Font-Size="X-Small"></anthem:TextBox>
+                                                &nbsp;<anthem:ImageButton ID="btn_lupa_produtor" runat="server" AutoUpdateAfterCallBack="true"
+                                                    BorderStyle="None" Height="15px" ImageAlign="AbsBottom" ImageUrl="~/img/lupa.gif"
+                                                    ToolTip="Filtrar Produtores" Width="15px" />
+                                                <anthem:Label ID="lbl_nm_pessoa" runat="server" AutoUpdateAfterCallBack="True" CssClass="Texto"
+                                                    Height="16px" Style="vertical-align: bottom" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label>
+                                                <asp:RequiredFieldValidator
+                                                        ID="RequiredFieldValidator4" runat="server" ControlToValidate="txt_cd_pessoa"
+                                                        CssClass="texto" ErrorMessage="Preencha o campo Código da Propriedade para continuar ou selecione-o pela lupa."
+                                                        Font-Bold="True" ValidationGroup="vg_abrir_cotacao" ToolTip="O campo Produtor deve ser informado.">[!]</asp:RequiredFieldValidator></td>
+                                            <td align="right" style="height: 18px">
+                                                Acordo Insumos:&nbsp;</td>
+                                            <td align="left" style="height: 18px">
+                                                <anthem:Label ID="lbl_acordo_aquisicao_insumos" runat="server" CssClass="texto"
+                                                    UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right" style="width: 14%; height: 18px;">
+                                                Cluster:</td>
+                                            <td align="left" colspan="1" style="height: 18px">
+                                                &nbsp;<anthem:Label ID="lbl_cluster" runat="server" CssClass="texto" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                            <td align="right" style="width: 12%; height: 18px;">
+                                                Email:</td>
+                                            <td align="left" style="height: 18px">
+                                                &nbsp;<anthem:Label ID="lbl_ds_email" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                            <td align="right" style="width: 10%; height: 18px;">
+                                                Telefone:</td>
+                                            <td align="left" style="width: 15%; height: 18px;">
+                                                &nbsp;<anthem:Label ID="lbl_ds_telefone" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 14%; height: 19px;" align="right">
+                                                Contrato Produtor:</td>
+                                            <td align="left" style="height: 19px">
+                                                &nbsp;<anthem:Label ID="lbl_contrato" runat="server" CssClass="texto" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                            <td style="width: 12%; height: 19px;" align="right">
+                                                Ini. e Fim Contrato:</td>
+                                            <td align="left" style="height: 19px">
+                                                <anthem:Label ID="lbl_dt_ini_contrato" runat="server" CssClass="texto" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label>
+                                                &nbsp;à&nbsp;
+                                                <anthem:Label ID="lbl_dt_fim_contrato" runat="server" CssClass="texto" UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                            <td style="width: 10%; height: 19px;" align="right">
+                                                Rescisão Contrato:</td>
+                                            <td style="width: 15%; height: 19px;" align="left">
+                                                &nbsp;<anthem:Label ID="lbl_dt_rescisao_contrato" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto"
+                                                    UpdateAfterCallBack="True" Font-Size="X-Small"></anthem:Label></td>
+                                        </tr>
+                                     </table>
+                                </td>
+                            </tr>
+	                    </TABLE>
+					</TD>
+					<TD></TD>
+				</TR>
+				<tr >
+    				<td></td>
+    				<td style="font-size: x-small">
+    					                    <table width="100%">
+                                <tr>
+                                    <td align="center" colspan="2" style="height: 18px">
+                                        <anthem:GridView ID="gridPropriedades" runat="server" AutoGenerateColumns="False"
+                                            AutoUpdateAfterCallBack="True" CellPadding="4" CssClass="texto"
+                                            Font-Names="Verdana" Font-Size="X-Small" ForeColor="#333333" PageSize="100"
+                                            UpdateAfterCallBack="True" Width="95%">
+                                            <FooterStyle BackColor="#507CD1" Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small"
+                                                ForeColor="White" />
+                                            <HeaderStyle Font-Bold="True" Font-Names="Verdana" Font-Size="X-Small" HorizontalAlign="Center" />
+                                            <EditRowStyle BackColor="#2461BF" />
+                                            <PagerStyle CssClass="texto" Font-Names="Verdana" Font-Size="XX-Small" HorizontalAlign="Center" />
+                                            <AlternatingRowStyle BackColor="White" />
+                                            <Columns>
+                                                <asp:TemplateField ShowHeader="False">
+                                                    <itemtemplate>
+<anthem:ImageButton id="imgselecionar" runat="server" ImageUrl="~/img/ico_triangulo_cinza.gif" AutoUpdateAfterCallBack="True" Text="Select" __designer:wfdid="w31" CommandName="Select" CausesValidation="False"></anthem:ImageButton> 
+</itemtemplate>
+                                                    <itemstyle horizontalalign="Center" />
+                                                </asp:TemplateField>
+                                                <asp:BoundField DataField="id_propriedade_matriz" HeaderText="Prop.Matriz" >
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Center" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="nm_abreviado_pessoa" HeaderText="Produtor" >
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Left" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="id_propriedade" HeaderText="Prop." ReadOnly="True">
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Center" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="cd_uf" HeaderText="UF" ReadOnly="True">
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Center" />
+                                                </asp:BoundField>
+                                                <asp:BoundField DataField="nm_cidade" HeaderText="Cidade" ReadOnly="True">
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Left" />
+                                                </asp:BoundField>
+                                                <asp:TemplateField HeaderText="Limite Bruto">
+                                                    <itemtemplate>
+<anthem:Label id="lbl_nr_limite_mes_bruto" runat="server" __designer:wfdid="w19"></anthem:Label> 
+</itemtemplate>
+                                                    <itemstyle horizontalalign="Right" />
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Descontos">
+                                                    <itemtemplate>
+<anthem:Label id="lbl_nr_valor_desconto" runat="server" __designer:wfdid="w25"></anthem:Label> 
+</itemtemplate>
+                                                    <itemstyle horizontalalign="Right" />
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Limite Dispon&#237;vel">
+                                                    <itemtemplate>
+<anthem:Label id="lbl_nr_valor_disponivel" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto" UpdateAfterCallBack="True" __designer:wfdid="w11"></anthem:Label> 
+</itemtemplate>
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Right" />
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Vl Mensal Estimado" Visible="False">
+                                                    <itemtemplate>
+<anthem:Label id="lbl_nr_valor_mensal_estimado" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto" UpdateAfterCallBack="True" Text='<%# bind("volumemes") %>' __designer:wfdid="w3"></anthem:Label> 
+</itemtemplate>
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Right" />
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Pedidos Abertos">
+                                                    <itemtemplate>
+<anthem:Label id="lbl_nr_total_pedidos_abertos" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto" UpdateAfterCallBack="True" __designer:wfdid="w4"></anthem:Label><anthem:HyperLink id="hl_nr_total_pedidos_abertos" runat="server" AutoUpdateAfterCallBack="True" ToolTip="Visualizar Pedidos Abertos" CssClass="textohlink" UpdateAfterCallBack="True" __designer:wfdid="w5" Font-Underline="True" Target="_blank">[hl_nr_total_pedidos_abertos]</anthem:HyperLink> 
+</itemtemplate>
+                                                    <headerstyle horizontalalign="Center" />
+                                                    <itemstyle horizontalalign="Center" />
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_propriedade" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_propriedade" runat="server" Text='<%# Bind("id_propriedade") %>' __designer:wfdid="w234"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_cidade" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_cidade" runat="server" Text='<%# Bind("id_cidade") %>' __designer:wfdid="w12"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_estado" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_estado" runat="server" Text='<%# Bind("id_estado") %>' __designer:wfdid="w228"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_cidade_matriz" Visible="False">
+                                                    <edititemtemplate>
+&nbsp;
+</edititemtemplate>
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_cidade_matriz" runat="server" Text='<%# Bind("id_cidade_matriz") %>' __designer:wfdid="w225"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_estado_matriz" Visible="False">
+                                                    <edititemtemplate>
+&nbsp;
+</edititemtemplate>
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_estado_matriz" runat="server" Text='<%# Bind("id_estado_matriz") %>' __designer:wfdid="w227"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_propriedade_matriz" Visible="False">
+                                                    <edititemtemplate>
+&nbsp; 
+</edititemtemplate>
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_propriedade_matriz" runat="server" Text='<%# Bind("id_propriedade_matriz") %>' __designer:wfdid="w128"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="matriz" Visible="False">
+                                                    <edititemtemplate>
+&nbsp;
+</edititemtemplate>
+                                                    <itemtemplate>
+<asp:Label id="lbl_matriz" runat="server" Text='<%# Bind("matriz") %>' __designer:wfdid="w219"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_produtor" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_produtor" runat="server" Text='<%# Bind("id_pessoa") %>' __designer:wfdid="w218"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="row_num" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_row_num" runat="server" Text='<%# Bind("row_num") %>' __designer:wfdid="w230"></asp:Label>
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="indexgridmatriz" Visible="False">
+                                                    <itemtemplate>
+<anthem:Label id="lbl_indexgridmatriz" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto" UpdateAfterCallBack="True" __designer:wfdid="w32"></anthem:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                                        </anthem:GridView>
+                                    <anthem:label id="lbl_informativo_1" runat="server" autoupdateaftercallback="True"
+                                        cssclass="texto" font-italic="True" font-size="10px" forecolor="Red" updateaftercallback="True"
+                                        visible="False">*Informativo: O cálculo do limite para propriedade foi baseado na projeção do Custo Financeiro.</anthem:label>
+                                        <anthem:Label ID="lbl_informativo_2" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto"
+                                            Font-Italic="True" Font-Size="10px" ForeColor="Blue" UpdateAfterCallBack="True"
+                                            Visible="False">**Informativo: Não existe faturamento anterior ou custo projetado para cálculo do limite. Os pedidos abertos para propriedades sem limite serão enviados para aprovação.</anthem:Label></td>
+                                </tr>
+	                        <tr>
+	                            <td style="HEIGHT: 16px; font-size: x-small;" class="titmodulo" align="left" colSpan="2">Dados do Parceiro de Insumos</td>
+	                        </tr>
+	                                                  <tr>
+                                <TD class="texto" align=center colspan="2">
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="right" style="height: 24px; font-size: x-small; width: 13%;">
+                                                <span style="color: #ff0000">*</span>Parceiro:</td>
+                                            <td align="left" style="height: 24px; font-size: x-small;">
+                                                &nbsp;<anthem:TextBox ID="txt_nm_fornecedor" runat="server" AutoPostBack="True" AutoUpdateAfterCallBack="true"
+                                                    CssClass="texto" MaxLength="100" onfocus="clearDataFornec()" Width="100px">[Filtre Nome]</anthem:TextBox>&nbsp;
+                                                Selecione:&nbsp;<anthem:DropDownList ID="cbo_fornecedor" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" AutoPostBack="True">
+                                                </anthem:DropDownList><asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="cbo_fornecedor"
+                                                    CssClass="texto" ErrorMessage="Preencha o campo Parceiro para continuar." Font-Bold="True"
+                                                    InitialValue="0" ValidationGroup="vg_abrir_cotacao">[!]</asp:RequiredFieldValidator></td>
+                                            <td align="right" style="height: 24px; font-size: x-small; width: 11%;">
+                                                Frete CIF Parceiro:</td>
+                                            <td align="left" style="height: 24px; font-size: x-small; width: 15%;">
+                                                &nbsp;<anthem:Label ID="lbl_frete_parceiro" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="Texto" Height="16px" Style="vertical-align: bottom" UpdateAfterCallBack="True"></anthem:Label></td>
+                                            <td align="right" style="height: 24px; font-size: x-small; width: 15%;">
+                                                Total Parcelas Parceiro:</td>
+                                            <td align="left" style="height: 24px; font-size: x-small;">
+                                                &nbsp;<anthem:Label ID="lbl_parcelas_parceiro" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="Texto" Height="16px" Style="vertical-align: bottom" UpdateAfterCallBack="True"></anthem:Label></td>
+                                          </tr>                        
+                                    </table>
+                                </td>
+                            </tr>
+
+	                        <tr>
+	                            <td style="HEIGHT: 16px; font-size: x-small;" class="titmodulo" align="left" colSpan="2">Dados do Pedido</td>
+	                        </tr>
+	                                                  <tr>
+                                <TD class="texto" align=center colspan="2" style="font-size: x-small">
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="right" style="width: 13%; height: 24px">
+                                                Pedido Indireto:</td>
+                                            <td align="left" style="width: 12%; height: 24px">
+                                                &nbsp;<anthem:DropDownList id="cbo_pedido_indireto" runat="server" CssClass="texto" AutoPostBack="false" Font-Size="X-Small">
+                                                <asp:ListItem Selected="True" Value="N">N&#227;o</asp:ListItem>
+                                                <asp:ListItem Value="S">Sim</asp:ListItem>
+                                            </anthem:DropDownList></td>
+                                            <td align="left" style=" height: 24px; width: 25%;">
+                                                &nbsp;Evento de Compras:&nbsp; <anthem:CheckBox ID="chk_compras_evento" runat="server" AutoPostBack="True" AutoUpdateAfterCallBack="True"
+                                                    ToolTip="Pedido realizado em EVENTO de Compras." /></td>
+                                            <td align="center" style="height: 24px; width: 20%;">
+                                                &nbsp; <span style="color: #ff0000">*</span>Parcelar?&nbsp;
+                                                <anthem:DropDownList ID="cbo_vai_parcelar" runat="server" AutoCallBack="True" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto">
+                                                    <asp:ListItem Selected="True" Value="N">N&#227;o</asp:ListItem>
+                                                    <asp:ListItem Value="D">Danone</asp:ListItem>
+                                                    <asp:ListItem Value="P">Parceiro</asp:ListItem>
+                                                </anthem:DropDownList></td>
+                                            <td align="left" style="height: 24px">
+                                                &nbsp;Parcelas:&nbsp;
+                                                <cc3:OnlyNumbersTextBox ID="txt_nr_parcelas" runat="server" AutoCallBack="True" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" MaxLength="2" Text='1' UpdateAfterCallBack="True"
+                                                    Width="30px" Enabled="False"></cc3:OnlyNumbersTextBox><anthem:RequiredFieldValidator ID="rfv_nr_parcelas"
+                                                        runat="server" AutoUpdateAfterCallBack="True" ControlToValidate="txt_nr_parcelas"
+                                                        Display="Dynamic" Enabled="False" ErrorMessage="O número de parcelas deve ser informado!"
+                                                        ToolTip="O número de parcelas deve ser informado!" ValidationGroup="vg_salvar">[!]</anthem:RequiredFieldValidator><anthem:CompareValidator
+                                                            ID="cv_nr_parcelas" runat="server" AutoUpdateAfterCallBack="True" ControlToValidate="txt_nr_parcelas"
+                                                            Enabled="False" ErrorMessage="O número de parcelas deve ser maio que zero (0)!"
+                                                            Operator="GreaterThan" ToolTip="O número de parcelas deve ser maio que zero (0)!"
+                                                            Type="Integer" ValidationGroup="vg_salvar" ValueToCompare="0">[!]</anthem:CompareValidator><anthem:RangeValidator
+                                                                ID="rv_parcelas" runat="server" AutoUpdateAfterCallBack="True" ControlToValidate="txt_nr_parcelas"
+                                                                Enabled="False" MaximumValue="3" MinimumValue="1" Type="Integer" ValidationGroup="vg_salvar">[!]</anthem:RangeValidator></td>
+                                          </tr>                        
+                                        <tr>
+                                            <td align="right" style="height: 24px">
+                                                <span style="color: #ff0000">*</span>Tipo do Frete:</td>
+                                            <td align="left" style="height: 24px" >
+                                                &nbsp;<anthem:DropDownList ID="cbo_tipo_frete" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto">
+                                                    <asp:ListItem Value="C">CIF</asp:ListItem>
+                                                    <asp:ListItem Value="D">FOB-D</asp:ListItem>
+                                                    <asp:ListItem Value="I">FOB-I</asp:ListItem>
+                                                    <asp:ListItem Selected="True">[Sel.]</asp:ListItem>
+                                                </anthem:DropDownList>
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="cbo_tipo_frete"
+                                                    CssClass="texto" ErrorMessage="Preencha o campo Tipo do Frete para continuar."
+                                                    Font-Bold="True" ValidationGroup="vg_adicionar_item">[!]</asp:RequiredFieldValidator></td>
+                                            <td align="left" colspan="2" style="height: 24px">
+                                                &nbsp;Maior Tipo Caminhão para Acesso à Propriedade:&nbsp;
+                                                    <anthem:DropDownList ID="cbo_tipo_caminhao" runat="server" AutoUpdateAfterCallBack="True"
+                                                        CssClass="texto" >
+                                                    </anthem:DropDownList></td>
+                                            <td align="left" colspan="1" style="height: 24px">
+                                                <anthem:Label ID="lbl_informativo_3" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" Font-Italic="True" Font-Size="10px" ForeColor="Red" UpdateAfterCallBack="True"
+                                                    Visible="False">*Informativo: </anthem:Label></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                    </table>
+ 
+				    </td>
+				    <td></td>
+				</tr>
+				<tr runat="server" id="tr_itens" >
+				<td></td>
+				<td style="font-size: x-small">                   <table width="100%">
+	                        <tr>
+	                            <td style="HEIGHT: 16px; font-size: x-small;" class="titmodulo" align="left" colSpan="2">Dados dos Itens do Pedido</td>
+	                        </tr>
+                            <tr>
+                                <TD class="texto" align=center colspan="2">
+                                    <table width="100%">
+                                        <tr>
+                                            <td align="right" style="height: 23px; font-size: x-small; width: 13%;">
+                                                <strong>Item:</strong></td>
+                                            <td align="left" style="height: 23px; font-size: x-small;">
+                                                &nbsp;<anthem:TextBox ID="txt_nm_item" runat="server" AutoPostBack="True" AutoUpdateAfterCallBack="true"
+                                                    CssClass="texto" MaxLength="100" onfocus="clearDataItem()" Width="100px">[Filtre Nome]</anthem:TextBox>&nbsp;
+                                                Selecione:
+                                                <anthem:DropDownList ID="cbo_item" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" AutoPostBack="True">
+                                                </anthem:DropDownList><asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="cbo_item"
+                                                    CssClass="texto" ErrorMessage="Selecione o campo Código do Item para continuar."
+                                                    Font-Bold="True" ValidationGroup="vg_adicionar_item" InitialValue="0">[!]</asp:RequiredFieldValidator>
+                                                &nbsp;&nbsp;
+                                                <anthem:Label ID="lbl_nm_categoria_tit" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" Font-Bold="True" UpdateAfterCallBack="True" Visible="False">Categoria:</anthem:Label>
+                                                <anthem:Label ID="lbl_nm_categoria" runat="server" AutoUpdateAfterCallBack="True"
+                                                    CssClass="texto" UpdateAfterCallBack="True"></anthem:Label>
+                                                &nbsp;
+                                                <anthem:Button ID="btn_novo_item" runat="server" Text="Adicionar" ToolTip="Adicionar novo item" CssClass="texto" ValidationGroup="vg_adicionar_item" AutoUpdateAfterCallBack="True" Enabled="False" />
+                                               <anthem:CustomValidator ID="cv_validar_item" runat="server" AutoUpdateAfterCallBack="True" ValidationGroup="vg_adicionar_item" ForeColor="White">[!]</anthem:CustomValidator></td>
+                                          </tr>                        
+                                    </table>
+                                </td>
+                            </tr>
+                                <tr >
+                                    <TD class="texto" align="center" colspan="2">
+                                        <anthem:GridView ID="gridResults" runat="server"
+                                            AutoGenerateColumns="False" AutoUpdateAfterCallBack="True" BackColor="White"
+                                            BorderColor="#DEDFDE" BorderStyle="None" BorderWidth="1px" CellPadding="4"
+                                            Font-Names="Verdana" Font-Size="XX-Small" ForeColor="Black" GridLines="Vertical" ShowHeader="False" UpdateAfterCallBack="True" Width="98%" UseAccessibleHeader="False">
+                                            <FooterStyle BackColor="#CCCC99" Font-Names="Verdana" Font-Size="XX-Small" />
+                                            <HeaderStyle BackColor="#6B696B" Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small"
+                                                ForeColor="White" HorizontalAlign="Left" />
+                                            <PagerStyle BackColor="#E0E0E0" Font-Names="Verdana" Font-Size="XX-Small" ForeColor="Black"
+                                                HorizontalAlign="Center" VerticalAlign="Top" />
+                                            <Columns>
+                                                <asp:TemplateField>
+                                                    <itemtemplate>
+&nbsp; <TABLE style="LEFT: 0px; BACKGROUND-IMAGE: url(img/faixa_filro.gif); POSITION: relative; TOP: 0px" cellSpacing=0 cellPadding=0 width="100%"><TBODY><TR style="BACKGROUND-IMAGE: url(img/avisos_topo_barra3.gif); TEXT-TRANSFORM: uppercase; HEIGHT: 19px" class="faixafiltro1"><TD style="HEIGHT: 26px; TEXT-ALIGN: left" class="faixafiltro1a"><anthem:Label id="lbl_descricao_item" runat="server" AutoUpdateAfterCallBack="True" Font-Bold="True" UpdateAfterCallBack="True" Text='<%# bind("lbl_descricao_item") %>' __designer:wfdid="w87"></anthem:Label></TD><TD style="WIDTH: 5%; HEIGHT: 26px" class="faixafiltro1a" align=center><anthem:ImageButton id="btn_delete" runat="server" ImageUrl="~/img/menos_red.gif" AutoUpdateAfterCallBack="True" ToolTip="Retirar Item Pedido" ImageAlign="Baseline" __designer:wfdid="w88" CommandName="delete" OnClientClick="if (confirm('Deseja realmente retirar o item do pedido?' )) return true;else return false;"></anthem:ImageButton> &nbsp; </TD></TR></TBODY></TABLE><TABLE style="BORDER-RIGHT: silver 1px solid; BORDER-TOP: silver 1px solid; FONT-SIZE: x-small; BORDER-LEFT: silver 1px solid; BORDER-BOTTOM: silver 1px solid; BORDER-COLLAPSE: collapse" width="100%" border=1><TBODY><TR><TD style="WIDTH: 8%; HEIGHT: 19px" align=right colSpan=2><SPAN style="COLOR: #ff0000">*</SPAN>Embalagem:</TD><TD style="WIDTH: 9%; HEIGHT: 19px" align=left>&nbsp;<anthem:DropDownList id="cbo_tipo_medida" runat="server" AutoUpdateAfterCallBack="True" AutoPostBack="True" CssClass="texto" UpdateAfterCallBack="True" __designer:wfdid="w89" OnSelectedIndexChanged="cbo_tipo_medida_SelectedIndexChanged"><asp:ListItem Value="G">Granel</asp:ListItem>
+<asp:ListItem Value="S">Sacaria</asp:ListItem>
+<asp:ListItem Value="O">Outros</asp:ListItem>
+<asp:ListItem Selected="True">[Selecione]</asp:ListItem>
+</anthem:DropDownList><asp:RequiredFieldValidator id="rqf_tipo_medida" runat="server" ValidationGroup="vg_salvar" CssClass="texto" ControlToValidate="cbo_tipo_medida" ErrorMessage="O tipo de medida deve ser informado." Font-Bold="False" __designer:wfdid="w90">[!]</asp:RequiredFieldValidator></TD><TD style="WIDTH: 4%; HEIGHT: 19px" align=right><SPAN style="COLOR: #ff0000">*</SPAN>Qtde:</TD><TD style="WIDTH: 8%; HEIGHT: 19px" align=left>&nbsp;<cc6:OnlyDecimalTextBox id="txt_nr_qtde" runat="server" AutoUpdateAfterCallBack="True" CssClass="texto" Width="70px" MaxLength="15" Text='<%# bind("nr_qtde") %>' __designer:wfdid="w91" DecimalSymbol="," MaxCaracteristica="10" MaxMantissa="4"></cc6:OnlyDecimalTextBox><asp:RequiredFieldValidator id="rqf_quantidade" runat="server" ValidationGroup="vg_salvar" CssClass="texto" ControlToValidate="txt_nr_qtde" ErrorMessage="A quantidade deve ser informada." Font-Bold="False" __designer:wfdid="w92">[!]</asp:RequiredFieldValidator> <asp:CompareValidator id="CompareValidator1" runat="server" ValidationGroup="vg_salvar" CssClass="texto" ControlToValidate="txt_nr_qtde" ErrorMessage="A quantidade deve ser informada." ValueToCompare="0" Type="Double" Operator="GreaterThan" __designer:wfdid="w93">[!]</asp:CompareValidator></TD><TD style="WIDTH: 3%; HEIGHT: 19px" align=center><anthem:ImageButton id="btn_lupa_preco" onclick="btn_lupa_preco_Click" runat="server" ImageUrl="~/img/sincronizar.png" AutoUpdateAfterCallBack="true" ToolTip="Atualizar Valores com Tabela de Preços" ImageAlign="AbsBottom" BorderStyle="None" __designer:wfdid="w94" CommandName="atualizarpreco"></anthem:ImageButton></TD><TD style="WIDTH: 5%; HEIGHT: 19px" align=right><SPAN style="COLOR: #ff0000">*</SPAN>Vl Unit:</TD><TD style="WIDTH: 16%; HEIGHT: 19px" align=left>&nbsp;<cc6:OnlyDecimalTextBox id="txt_nr_valor_unitario" runat="server" AutoUpdateAfterCallBack="True" ToolTip="O preço é trazido da Tabela de Preços onde o município destino é o mesmo da propriedade. Caso não exista, será trazido o preço cadastrado para município destino Todos, sempre respeitando a data mais recente de cadastramento." AutoPostBack="True" CssClass="texto" Width="65px" MaxLength="13" UpdateAfterCallBack="True" Text='<%# bind("nr_valor_unitario") %>' __designer:wfdid="w95" DecimalSymbol="," MaxCaracteristica="10" MaxMantissa="2" OnTextChanged="txt_nr_valor_unitario_TextChanged"></cc6:OnlyDecimalTextBox>&nbsp;<anthem:Label id="lbl_inf_preco" runat="server" AutoUpdateAfterCallBack="True" Font-Size="9px" Font-Bold="False" UpdateAfterCallBack="True" ForeColor="Red" Font-Italic="True" Text='<%# bind("inf_preco") %>' __designer:wfdid="w96"></anthem:Label><asp:RequiredFieldValidator id="rqf_valor_unitario" runat="server" ValidationGroup="vg_salvar" CssClass="texto" ControlToValidate="txt_nr_valor_unitario" ErrorMessage="O valor unitário deve ser informado." Font-Bold="False" __designer:wfdid="w97">[!]</asp:RequiredFieldValidator></TD><TD style="WIDTH: 10%; HEIGHT: 19px" align=right colSpan=2>Vl Sacaria:</TD><TD style="HEIGHT: 19px" align=left>&nbsp;<cc6:OnlyDecimalTextBox id="txt_nr_sacaria" runat="server" AutoUpdateAfterCallBack="True" ToolTip="O valor da Sacaria é trazido da Tabela de Preços onde o município destino é o mesmo da propriedade. Caso não exista, será trazido o valor cadastrado para município destino Todos, sempre respeitando a data mais recente de cadastramento." CssClass="texto" Width="60px" MaxLength="13" UpdateAfterCallBack="True" Text='<%# bind("nr_sacaria") %>' __designer:wfdid="w98" DecimalSymbol="," MaxCaracteristica="10" MaxMantissa="2"></cc6:OnlyDecimalTextBox><anthem:RequiredFieldValidator id="rfv_sacaria" runat="server" AutoUpdateAfterCallBack="True" ValidationGroup="vg_salvar" ToolTip="A sacaria deve ser informada." ControlToValidate="txt_nr_sacaria" ErrorMessage="A sacaria deve ser informada." Display="Dynamic" __designer:wfdid="w99">[!]</anthem:RequiredFieldValidator></TD><TD style="WIDTH: 7%; HEIGHT: 19px" align=right>Total Item:</TD><TD style="WIDTH: 8%; HEIGHT: 19px" align=left><anthem:Label id="lbl_total_item" runat="server" AutoUpdateAfterCallBack="True" Font-Bold="False" UpdateAfterCallBack="True" Text='<%# bind("nr_valor_total_item") %>' __designer:wfdid="w100"></anthem:Label></TD></TR><TR id="tr_frete" runat="server"><TD align=right colSpan=2>Transportador:</TD><TD style="HEIGHT: 19px" align=left colSpan=6>&nbsp;<anthem:DropDownList id="cbo_transportador" runat="server" AutoUpdateAfterCallBack="True" Enabled="False" CssClass="texto" UpdateAfterCallBack="True" __designer:wfdid="w101" OnSelectedIndexChanged="cbo_transportador_SelectedIndexChanged"></anthem:DropDownList><anthem:RequiredFieldValidator id="rf_transportador" runat="server" AutoUpdateAfterCallBack="True" Enabled="False" ValidationGroup="vg_salvar" ToolTip="O transportador deve ser informado!" ControlToValidate="cbo_transportador" ErrorMessage="Preencha o campo Tranportador Central para continuar." InitialValue="0" Display="Dynamic" __designer:wfdid="w102">[!]</anthem:RequiredFieldValidator></TD><TD style="WIDTH: 3%; HEIGHT: 19px" align=center colSpan=1><anthem:ImageButton id="btn_lupa_frete_valor" onclick="btn_lupa_frete_valor_Click" runat="server" ImageUrl="~/img/lupa_desabilitada.gif" AutoUpdateAfterCallBack="true" ToolTip="Buscar Valores Frete Transportador" Width="15px" ImageAlign="AbsBottom" Height="15px" BorderStyle="None" __designer:wfdid="w103" CommandName="Lupa"></anthem:ImageButton></TD><TD style="HEIGHT: 19px" align=right colSpan=1>Vl Frete:</TD><TD style="HEIGHT: 19px" align=left colSpan=1>&nbsp;<cc6:OnlyDecimalTextBox id="txt_nr_frete" runat="server" AutoUpdateAfterCallBack="True" Enabled="False" CssClass="texto" Width="65px" MaxLength="13" AutoCallBack="True" UpdateAfterCallBack="True" Text='<%# bind("nr_frete") %>' __designer:wfdid="w104" DecimalSymbol="," MaxCaracteristica="10" MaxMantissa="2" OnTextChanged="txt_nr_frete_TextChanged"></cc6:OnlyDecimalTextBox>&nbsp;<anthem:Label id="lbl_inf_frete" runat="server" AutoUpdateAfterCallBack="True" Font-Size="9px" Font-Bold="False" UpdateAfterCallBack="True" ForeColor="Red" Font-Italic="True" Text='<%# bind("inf_frete") %>' __designer:wfdid="w105"></anthem:Label> <anthem:RequiredFieldValidator id="rf_frete" runat="server" AutoUpdateAfterCallBack="True" Enabled="False" ValidationGroup="vg_salvar" ToolTip="O valor de frete deve ser informado!" ControlToValidate="txt_nr_frete" ErrorMessage="O valor de frete deve ser informado." Display="Dynamic" __designer:wfdid="w106">[!]</anthem:RequiredFieldValidator></TD><TD style="HEIGHT: 19px" align=right colSpan=1>Total Frete:</TD><TD style="HEIGHT: 19px" align=left colSpan=1><anthem:Label id="lbl_total_frete" runat="server" AutoUpdateAfterCallBack="True" Font-Bold="False" UpdateAfterCallBack="True" Text='<%# bind("nr_valor_total_frete") %>' __designer:wfdid="w107"></anthem:Label></TD></TR><TR><TD style="HEIGHT: 19px" align=left colSpan=8><anthem:Label id="lbl_informativo" runat="server" AutoUpdateAfterCallBack="True" Font-Size="9px" Font-Bold="False" UpdateAfterCallBack="True" ForeColor="Red" Font-Italic="True" __designer:wfdid="w108"></anthem:Label></TD><TD style="HEIGHT: 19px" align=center colSpan=3>&nbsp;<anthem:Label id="lbl_tipo_caminhao" runat="server" AutoUpdateAfterCallBack="True" Font-Bold="False" UpdateAfterCallBack="True" Text='<%# bind("nm_veiculo_central_compras") %>' __designer:wfdid="w109"></anthem:Label></TD><TD style="HEIGHT: 19px" align=right colSpan=1><anthem:ImageButton id="btn_atualizar_totais" onclick="btn_atualizar_totais_Click" runat="server" ImageUrl="~/img/sincronizar.png" AutoUpdateAfterCallBack="true" ToolTip="Atualizar Totalizadores" ImageAlign="AbsBottom" BorderStyle="None" __designer:wfdid="w110" CommandName="atualizartotais"></anthem:ImageButton>&nbsp; Total:</TD><TD style="HEIGHT: 19px" align=left colSpan=1><anthem:Label id="lbl_valor_total" runat="server" AutoUpdateAfterCallBack="True" Font-Bold="False" UpdateAfterCallBack="True" Text='<%# bind("nr_valor_total") %>' __designer:wfdid="w111"></anthem:Label></TD></TR></TBODY></TABLE>
+</itemtemplate>
+                                                    <itemstyle width="100%" />
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_item" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_item" runat="server" Text='<%# bind("id_item") %>' __designer:wfdid="w26"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="st_item_parcelado_danone" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_st_item_parcelado_danone" runat="server" Text='<%# bind("st_item_parcelado_danone") %>' __designer:wfdid="w1085"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_central_tabela_frete_veiculos" Visible="False">
+                                                    <itemtemplate>
+&nbsp;<asp:Label id="lbl_id_central_tabela_frete_veiculos" runat="server" Text='<%# bind("id_central_tabela_frete_veiculos") %>' __designer:wfdid="w1086"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_central_tabela_precos" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_central_tabela_precos" runat="server" Text='<%# bind("id_central_tabela_precos") %>' __designer:wfdid="w1087"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_veiculo_central_compras" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_veiculo_central_compras" runat="server" Text='<%# bind("id_veiculo_central_compras") %>' __designer:wfdid="w1088"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="ds_tipo_medida" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="ds_tipo_medida" runat="server" Text='<%# Bind("ds_tipo_medida") %>' __designer:wfdid="w1089"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_transportador" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="id_transportador" runat="server" Text='<%# Bind("id_transportador") %>' __designer:wfdid="w1119"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="nr_valor_total_item" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="nr_valor_total_item" runat="server" Text='<%# Bind("nr_valor_total_item") %>' __designer:wfdid="w885"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="nr_valor_total_frete" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="nr_valor_total_frete" runat="server" Text='<%# Bind("nr_valor_total_frete") %>' __designer:wfdid="w886"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="nr_valor_total" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="nr_valor_total" runat="server" Text='<%# Bind("nr_valor_total") %>' __designer:wfdid="w887"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="nr_valor_tab_preco" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_nr_valor_tab_preco" runat="server" Text='<%# Bind("nr_valor_tab_preco") %>' __designer:wfdid="w1092"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="nr_sacaria_tab_preco" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_nr_sacaria_tab_preco" runat="server" Text='<%# Bind("nr_sacaria_tab_preco") %>' __designer:wfdid="w1091"></asp:Label> 
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="ds_item" Visible="False">
+                                                    <edititemtemplate>
+<asp:Label runat="server" Text='<%# Eval("ds_item") %>' id="lbl_ds_item"></asp:Label>
+</edititemtemplate>
+                                                    <itemtemplate>
+<asp:Label runat="server" Text='<%# Bind("ds_item") %>' id="lbl_ds_item"></asp:Label>
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="id_categoria" Visible="False">
+                                                    <itemtemplate>
+<asp:Label id="lbl_id_categoria" runat="server" Text='<%# Bind("id_categoria") %>' __designer:wfdid="w53"></asp:Label>
+</itemtemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+                                        </anthem:GridView>
+                                    </td>
+                                </tr>
+                                
+	                            <tr>
+	                                <TD class="texto" align=center colspan="2">
+                                        &nbsp;<anthem:CustomValidator ID="cv_itens_fornecedores" runat="server" AutoUpdateAfterCallBack="True"
+                                            ForeColor="White" ValidationGroup="vg_verificacoes_finais">[!]</anthem:CustomValidator>
+                                        &nbsp;
+                                        &nbsp; &nbsp;&nbsp; &nbsp;
+                                        <anthem:CustomValidator ID="cv_pedido_itens" runat="server" AutoUpdateAfterCallBack="True"
+                                            ForeColor="White" ValidationGroup="vg_pedido">[!]</anthem:CustomValidator>
+                                        <anthem:CustomValidator ID="cv_pedido_aprovacao" runat="server" AutoUpdateAfterCallBack="True"
+                                            ForeColor="White" ValidationGroup="vg_pedido">[!]</anthem:CustomValidator></td>
+	                            </tr>
+							<TR>
+								<TD style="HEIGHT: 15px" align="center" colspan="2" class="texto">
+					<anthem:Panel ID="pnl_frete" runat="server" BackColor="White"  HorizontalAlign="Center" Width="100%" AutoUpdateAfterCallBack="True" Visible="False" GroupingText="Tabela de Frete">
+                                              <table width="98%">
+                                <tr>
+                                     <td  align="left" class="titmodulo">
+                                         &nbsp;<anthem:Label ID="lbl_detalhe_item_frete" runat="server" AutoUpdateAfterCallBack="True" Style="vertical-align: bottom;
+                                             text-align: left" UpdateAfterCallBack="True">Frete para o ITEM XXX - XXXXXXX</anthem:Label></td>
+                                   <td  align="center">
+                                        <anthem:ImageButton ID="btn_fechar" runat="server" AutoUpdateAfterCallBack="True"
+                                             ImageUrl="~/img/icone_excluir_desabilitado.gif"
+                                            ToolTip="Fechar" UpdateAfterCallBack="True" />
+                                    </td>
+                                </tr>
+                            </table>
+
+                                    <anthem:GridView ID="gridfrete" runat="server" AutoGenerateColumns="False" CellPadding="4"
+                                        Font-Names="Verdana" Font-Size="XX-Small" ForeColor="#333333" GridLines="None"
+                                        PageSize="100" UpdateAfterCallBack="True" Width="97%" AutoUpdateAfterCallBack="True" DataKeyNames="id_central_tabela_frete_veiculos">
+                                        <FooterStyle BackColor="#507CD1" Font-Bold="True" Font-Names="Verdana" Font-Size="XX-Small"
+                                            ForeColor="White" />
+                                        <HeaderStyle BackColor="#507CD1" Font-Bold="True" Font-Names="Verdana" Font-Size="X-Small"
+                                            ForeColor="White" Height="23px" HorizontalAlign="Left" />
+                                        <EditRowStyle BackColor="#2461BF" />
+                                        <PagerStyle BackColor="#2461BF" Font-Names="Verdana" Font-Size="X-Small" ForeColor="White"
+                                            HorizontalAlign="Center" />
+                                        <AlternatingRowStyle BackColor="White" />
+                                        <Columns>
+                                            <asp:BoundField DataField="pessoa_abreviado" HeaderText="Transportador">
+                                                <itemstyle horizontalalign="Left" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="cd_uf_origem" HeaderText="UF">
+                                                <headerstyle horizontalalign="Center" />
+                                                <itemstyle horizontalalign="Center" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="nm_cidade_origem" HeaderText="Cidade Ori.">
+                                                <itemstyle horizontalalign="Left" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="nm_veiculocentralcompras" HeaderText="Ve&#237;culo">
+                                                <headerstyle horizontalalign="Center" />
+                                                <itemstyle horizontalalign="Center" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="ds_capacidade" HeaderText="Capacidade">
+                                                <headerstyle horizontalalign="Center" />
+                                                <itemstyle horizontalalign="Center" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="cd_uf_destino" HeaderText="UF Dest.">
+                                                <headerstyle horizontalalign="Center" />
+                                                <itemstyle horizontalalign="Center" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="nm_cidade_destino" HeaderText="Cidade Dest.">
+                                                <itemstyle horizontalalign="Left" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="nr_valor_frete" HeaderText="Valor" DataFormatString="{0:N2}">
+                                                <itemstyle horizontalalign="Right" />
+                                            </asp:BoundField>
+                                            <asp:BoundField DataField="dt_cotacao" DataFormatString="{0:dd/MM/yyyy}" HeaderText="Cota&#231;&#227;o">
+                                                <headerstyle horizontalalign="Center" />
+                                                <itemstyle horizontalalign="Center" />
+                                            </asp:BoundField>
+                                            <asp:TemplateField>
+                                                <headertemplate>
+&nbsp;
+</headertemplate>
+                                                <itemtemplate>
+<asp:ImageButton id="img_selecionar" onclick="img_selecionar_Click" runat="server" ImageUrl="~/img/icon_ok.gif" __designer:wfdid="w264" CommandName="selecionar"></asp:ImageButton>&nbsp; 
+</itemtemplate>
+                                                <headerstyle width="3%" horizontalalign="Center" />
+                                                <itemstyle horizontalalign="Center" />
+                                            </asp:TemplateField>
+                                        </Columns>
+                                        <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                                        <RowStyle BackColor="#EFF3FB" />
+                                    </anthem:GridView>
+                                    					</anthem:Panel>				
+
+                                    </TD>
+							</TR>
+                    <tr>
+                        <td align="center" class="texto" colspan="2" style="height: 15px">
+                        </td>
+                    </tr>
+						</TABLE>
+</td>
+				<td></td>
+				</tr>
+				<TR>
+					<TD style="width: 7px"></TD>
+					<TD>
+						<TABLE id="Table11" height="23" cellSpacing="0" cellPadding="0" width="100%" border="0">
+							<TR>
+								<TD class="faixafiltro1a"  vAlign="middle" align="left" 
+									background="img/faixa_filro.gif">
+									</TD>
+								<TD class="faixafiltro1a" vAlign="middle" align="right" background="img/faixa_filro.gif"
+									colSpan="4">&nbsp;</TD>
+							</TR>
+						</TABLE>
+					</TD>
+					<TD ></TD>
+				</TR>
+			</TABLE>
+			<asp:ValidationSummary id="validatorSummary" runat="server" ShowMessageBox="True" ShowSummary="False" ValidationGroup="vg_salvar"></asp:ValidationSummary>
+            <cc7:AlertMessages ID="messageControl" runat="server" AutoUpdateAfterCallBack="True"
+                UpdateAfterCallBack="True"></cc7:AlertMessages>
+            <asp:ValidationSummary ID="vs_abrir_cotacao" runat="server" ShowMessageBox="True"
+                ShowSummary="False" ValidationGroup="vg_abrir_cotacao" /><asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowMessageBox="True"
+                ShowSummary="False" ValidationGroup="vg_adicionar_item" />
+           <anthem:HiddenField ID="hf_id_pessoa" runat="server" AutoUpdateAfterCallBack="true" />
+           <anthem:HiddenField ID="hf_id_produtor" runat="server" AutoUpdateAfterCallBack="true" />
+        </form>
+	</body>
+</HTML>

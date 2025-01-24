@@ -1,0 +1,192 @@
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>Central de Compras Contrato - Email ao Produtor</title>
+		<LINK href="css/estilo.css" type="text/css" rel="stylesheet">
+	
+
+</HEAD>
+	<body  >
+		<form id="Form1"  runat="server">
+        <div id="tudorel" style="border-right: black 1px solid; border-top: black 1px solid; border-left: black 1px solid; border-bottom: black 1px solid; vertical-align: top; text-align: center; width: 98%;">
+        
+            <table style="text-align: center" cellpadding="1" cellspacing="1" width="98%">
+            <tr><td >
+            <table width="100%" cellpadding="0" cellspacing="0" >
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px; font-weight: bold;">
+                        NEGOCIAÇÃO DE CONTRATO</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall">
+                        $dt_hoje</td>
+                </tr>
+                <tr>
+                   <td align="left" class="textosmall" style="height: 20px">
+                       &nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" style="height: 20px">
+                        À</td>
+                </tr>
+                <tr>
+                    <td align="left" style="height: 20px" class="texto12pt">
+                        $nm_produtor</td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                        $nm_propriedade (código $id_propriedade)</td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                        Fone.: $prodfone3 &nbsp; $prodfone4</td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="texto12pt" style="height: 20px">
+                        Prezado Produtor.<br />
+                        Seguem informações das suas compras junto à nossa Central de Compras:<br />
+                    </td>
+                </tr>
+            </table>
+            <table class="textosmall" width="98%"  cellspacing="0" style="text-align: left; font-size: 11px; color: black; font-family: Verdana, Arial;">
+                <tr>
+                    <td style="width: 20px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 32px; height: 15px;">
+                        &nbsp;&nbsp;
+                    </td>
+                    <td style="width: 35px; height: 15px;">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                </tr>
+
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;Produto:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$nm_item</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;Parceiro Central:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$nm_parceiro</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;Quantidade Total:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$ds_qtde_total</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;Preço Unitário:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$nr_preco_unitario</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;Preço Sacaria:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$nr_preco_sacaria</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;CIF / FOB:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$ds_tipo_frete</td>
+                </tr>
+                <tr>
+                    <td style="height: 17px;" colspan="4">
+                        &nbsp;Tipo Embalagem:</td>
+                    <td colspan="4" style="height: 17px">
+                        &nbsp;$ds_tipo_medida</td>
+                </tr>
+                <tr>
+                    <td style="width: 20px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 15px;">
+                        &nbsp;</td>
+                    <td style="width: 32px; height: 15px;">
+                        &nbsp;&nbsp;
+                    </td>
+                    <td style="width: 35px; height: 15px;">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                    <td colspan="2" style="height: 15px">
+                        &nbsp;</td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="font-weight: bold; height: 18px">
+                        &nbsp;Cadência retirada por mês:</td>
+                </tr>
+                 <tr>
+                    <td colspan="8" style="text-align: left">
+                        <table class="textosmall" border="0" style="text-align: left; font-size: 11px; color: black; font-family: Verdana, Arial; border-right: 1px solid; border-top: 1px solid; border-left: 1px solid; border-bottom: 1px solid;" cellpadding="6" cellspacing="1">
+                            <tr>
+                                <td style="text-align: center; background-color: #507CD1; color: white;">Referência</td>
+                                <td style="text-align: center; background-color: #507CD1; color: white;">Qtde</td>
+                                <td style="text-align: center;  background-color: #507CD1; color: white;">
+                                    Pedido</td>
+                            </tr>
+                            $dsgridpedido
+                        </table>
+
+                    </td>
+                </tr>
+                 <tr>
+                    <td style="width: 20px; height: 11px">
+                        &nbsp;</td>
+                    <td style="width: 27px; height: 11px">
+                        &nbsp;</td>
+                    <td colspan="4" style="height: 11px">
+                        &nbsp;</td>
+                    <td style="width: 420px; height: 11px">
+                        &nbsp;</td>
+                    <td style="height: 11px">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px;">
+                        <span style="font-weight: bold" class="textosmall">Fica acordado entre as partes que, as diretrizes acima deverão ser cumpridas e seguidas
+                        conforme previamente estipulado, e que poderão ser ajustadas apenas em caráter de
+                        exceção e se deliberadas entre as partes.</span></td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px;">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px">
+                        Atenciosamente,</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px">
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px">
+                        Central de Compras Danone</td>
+                </tr>
+                <tr>
+                    <td align="left" class="textosmall" colspan="8" style="height: 18px">
+                        central.compras@danone.com</td>
+                </tr>
+            </table>
+            </td></tr>
+            </table>
+        </div>
+
+     </form>
+	</body>
+</HTML>

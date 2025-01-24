@@ -1,0 +1,452 @@
+﻿<%@ Page Title="Minhas Vagas" Language="vb" AutoEventWireup="false" MasterPageFile="~/Site.Master" CodeBehind="gv_home.aspx.vb" Inherits="AlmaVivaSystem.gv_home" %>
+<%@ Register assembly="RK.TextBox.CPF" namespace="RK.TextBox.CPF" tagprefix="cc1" %>
+<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="asp" %>
+<%@ Register assembly="RK.TextBox.OnlyDate" namespace="RK.TextBox.OnlyDate" tagprefix="cc2" %>
+<asp:Content ID="HeaderContent" ContentPlaceHolderID="HeadContent" runat="server">
+    <style type="text/css">
+        .style1
+        {
+            height: 10px;
+        }
+        .style2
+        {
+            height: 8px;
+        }
+    </style>
+</asp:Content>
+<asp:Content ID="PrincipalCont" ContentPlaceHolderID="ConteudoPrincipal" runat="server">
+    <div id="corpo">
+
+            <div class="barranavegacaoesq">
+                <!--<ul class="nav">-->
+                    <!--<li><asp:LinkButton ID="lk_voltar"  runat="server">Voltar</asp:LinkButton></li>-->
+                    <!--<li><asp:LinkButton ID="lk_novo" style="width:auto;padding-left:0.5em;padding-right:0.5em;" runat="server">Nova Admissão</asp:LinkButton></li>-->
+                <!--</ul>-->
+                <table width="100%">
+                    <tr>
+                        <td>
+                
+                Hoje é dia
+            <asp:Label ID="lbl_data_now" runat="server"></asp:Label>
+                ! São <asp:Label ID="lbl_horas_now" runat="server"></asp:Label>
+            &nbsp;horas.
+            </td>
+            <td align="right" valign="middle" width="33%"> 
+            <asp:Label ID="lbl_visao" runat="server">Visualização das  </asp:Label>
+                <asp:DropDownList ID="cbo_visao" runat="server" AutoPostBack="True" 
+                    CssClass="texto">
+                    <asp:ListItem Value="1">Minhas Vagas</asp:ListItem>
+                    <asp:ListItem Value="2">Parceiros</asp:ListItem>
+                    <asp:ListItem Value="3" Selected="True">Minhas Vagas e Parceiros</asp:ListItem>
+                </asp:DropDownList>
+                        </td>
+            </tr></table></div>
+            <div class="barranavegacaodir">
+            <!--
+                <ul class="nav azul">
+                    <li><asp:LinkButton ID="lk_grupos" runat="server">Grupos</asp:LinkButton></li>
+    
+                    <li ><asp:LinkButton ID="lk_senha" style="width:auto;padding-left:0.5em;padding-right:0.5em;" runat="server">Alterar Senha</asp:LinkButton></li>
+                </ul>
+             -->
+            </div>
+            <hr class="clear"/>
+            <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                       <ContentTemplate >
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td class="titulo" width="58%" >Vagas em Andamento</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="40%" class="titulo" >
+           
+                Gráfico de Vagas</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top" valign="top" width="58%"  ><hr class="hr1" /></td>
+            <td width="2%" align="left" valign="top"> 
+                
+                &nbsp;</td>
+            <td width="40%" align="left" valign="top"> 
+                
+                <hr class="hr1" /></td>
+        </tr>
+
+
+        <tr>
+            <td style="vertical-align: top" valign="top" width="58%"  >&nbsp;&nbsp;&nbsp;
+            <asp:Label ID="lbl_total_vaga_texto" runat="server" CssClass="texto">Total Vagas Abertas:</asp:Label>
+&nbsp;<asp:Label ID="lbl_total_vagas" runat="server" CssClass="texto"></asp:Label>
+&nbsp;&nbsp;&nbsp;&nbsp;<asp:Label ID="Label1" runat="server" CssClass="texto">Ir para:</asp:Label>&nbsp;<asp:DropDownList 
+                    ID="cbo_irpara" runat="server" AutoPostBack="True" CssClass="caixatexto">
+                    <asp:ListItem Selected="True" Value="0">[Selecione]</asp:ListItem>
+                    <asp:ListItem Value="1">Abertas Últimos 7 dias</asp:ListItem>
+                    <asp:ListItem Value="2">Abertas Últimos 15 dias</asp:ListItem>
+                    <asp:ListItem Value="3">Abertas Últimos 30 dias</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+            <td width="2%" align="left" valign="top"> 
+                
+                &nbsp;</td>
+            <td width="40%" align="center" valign="top" rowspan="3"> 
+                
+                <asp:Chart ID="Chart1" runat="server" BackColor="" Height="220px" 
+                    Palette="Pastel" Width="400px">
+                    <series>
+                        <asp:Series ChartType="Pie" IsValueShownAsLabel="True" Legend="Legenda" 
+                            Name="Series1" XValueType="String">
+                        </asp:Series>
+                    </series>
+                    <chartareas>
+                        <asp:ChartArea Name="ChartArea1">
+                        </asp:ChartArea>
+                    </chartareas>
+                    <Legends>
+                        <asp:Legend Alignment="Center" BackImageAlignment="Bottom" Docking="Bottom" 
+                            LegendStyle="Row" Name="Legenda">
+                        </asp:Legend>
+                    </Legends>
+                    <Titles>
+                        <asp:Title Name="Title1" Text="VAGAS ABERTAS E FECHADAS">
+                        </asp:Title>
+                    </Titles>
+                </asp:Chart>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="vertical-align: top" valign="top" width="58%"  >
+                <asp:GridView ID="gridResults" runat="server" 
+                AllowSorting="True" AutoGenerateColumns="False" style="margin-right: 0px" 
+                Width="98%" CellPadding="4" ForeColor="#4D4D4D" GridLines="None" 
+                    CssClass="texto12" CaptionAlign="Left" 
+                    DataKeyNames="id_vaga" PageSize="6" EnableTheming="True" 
+                    HorizontalAlign="Center" ShowHeader="False" AllowPaging="True" 
+                    Font-Size="11px" Height="15px">
+                    <AlternatingRowStyle BackColor="White" />
+                <Columns>
+                    <asp:TemplateField HeaderText="semaforo">
+                        <ItemTemplate>
+                            <asp:Image ID="img_semaforo" runat="server" CssClass="texto" 
+                                ImageUrl="~/img/icon_status_vermelho.gif" />
+                        </ItemTemplate>
+                        <ItemStyle Width="2%" />
+                    </asp:TemplateField>
+                    <asp:HyperLinkField DataTextField="id_vaga" Text="Cod Vaga" />
+                    <asp:BoundField DataField="nm_vaga" HeaderText="nm vaga" 
+                        SortExpression="nm_vaga" />
+                    <asp:TemplateField HeaderText="Qtde Vagas">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_total_vagas" runat="server">0 Vagas</asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Vagas ABertas">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_vagas_abertas" runat="server">0 Abertas</asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Cand. Selecionados">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_candidatos_selecionados" runat="server">0 Selec.</asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Cand. Aprovados">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_candidatos_aprovados" runat="server">0 Aprovados</asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="qtde vagas" Visible="False">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_qtde_vagas" runat="server" 
+                                Text='<%# Bind("nr_vagas") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="id vaga" Visible="False">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_id_vaga" runat="server" Text='<%# Bind("id_vaga") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="totaldiassla" Visible="False">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_total_dias_sla" runat="server" 
+                                Text='<%# Bind("TotalDiasSla") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="DiasUsados" Visible="False">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_dias_usados" runat="server" Text='<%# Bind("DiasUsados") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="vagas fechadas" Visible="False">
+                        <ItemTemplate>
+                            <asp:Label ID="lbl_nr_vagas_fechadas" runat="server" 
+                                Text='<%# Bind("nr_vagasfechadas") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="ds_login" HeaderText="Resp." />
+                </Columns>
+                    <EditRowStyle BackColor="#69B9E4" />
+                    <FooterStyle BackColor="#DEE4EF" Font-Bold="True" ForeColor="White" 
+                        CssClass="texto" />
+                    <HeaderStyle BackColor="#4b6c9e" Font-Bold="True" ForeColor="White" 
+                        Font-Size="X-Small" HorizontalAlign="Left" />
+                    <PagerStyle BackColor="#4B6C9E" ForeColor="White" HorizontalAlign="Center" />
+                    <RowStyle BackColor="#DEE4EF" Wrap="True" />
+                    <SelectedRowStyle BackColor="#D3EBF8" Font-Bold="True" ForeColor="#4A4A4A" />
+                    <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                    <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                    <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                    <SortedDescendingHeaderStyle BackColor="#4870BE" />
+            </asp:GridView>
+            </td>
+            <td width="2%" align="left" valign="top"> 
+                
+                &nbsp;</td>
+        </tr>
+
+
+        <tr>
+            <td align="center" 
+                style="vertical-align: top; font-size: xx-small; font-style: italic;" 
+                valign="top" width="58%">
+                Legenda SLA:
+                <asp:Image ID="Image1" runat="server" ImageUrl="~/img/icon_status_verde.gif" />
+                &nbsp;No Prazo&nbsp;
+                <asp:Image ID="Image2" runat="server" 
+                    ImageUrl="~/img/icon_status_amarelo.gif" />
+                &nbsp;30% ou menos para Vencer&nbsp;
+                <asp:Image ID="Image3" runat="server" 
+                    ImageUrl="~/img/icon_status_vermelho.gif" />
+                &nbsp;Vencido</td>
+            <td align="left" valign="top" width="2%">
+                &nbsp;</td>
+        </tr>
+
+
+    </table>
+    <table align="center" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="29%" >&nbsp;</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="29%" >
+           
+                &nbsp;</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="38%" >
+           
+                &nbsp;</td>
+        </tr>
+        <tr>
+            <td class="titulo" width="29%" >Totalizadores de Vagas</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="29%" class="titulo" >
+           
+                Currículos</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="38%" class="titulo" >
+           
+                Últimas Admissões...</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top" valign="top" width="29%"  ><hr class="hr1" /></td>
+            <td width="2%" align="left" valign="top"> 
+                
+                &nbsp;</td>
+            <td width="29%" align="left" valign="top"> 
+                
+                <hr class="hr1" /></td>
+            <td width="2%" align="left" valign="top"> 
+                
+                &nbsp;</td>
+            <td width="38%" align="left" valign="top"> 
+                
+                <hr class="hr1" /></td>
+        </tr>
+        <tr>
+            <td width="29%" valign="top" > 
+
+               
+    <table align="center" cellpadding="4" cellspacing="3" 
+        class="texto12" width="98%">
+        <tr>
+            <td align="right" colspan="1">
+                
+                Totalizar&nbsp; </td>
+            <td align="left">
+                <asp:DropDownList ID="cbo_periodo" runat="server" AutoPostBack="True">
+                    <asp:ListItem Selected="True" Value="4">Todas as vagas</asp:ListItem>
+                    <asp:ListItem Value="1">Últimos 30 dias</asp:ListItem>
+                    <asp:ListItem Value="2">Últimos 60 dias</asp:ListItem>
+                    <asp:ListItem Value="3">Últimos 90 dias</asp:ListItem>
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td align="right" class="style2">
+                </td>
+            <td width="30%" class="style2">
+                </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Cadastradas:</td>
+            <td width="30%">
+                <asp:Label ID="lbl_vg_cadastradas" runat="server" CssClass="texto12">0</asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Abertas:</td>
+            <td>
+                <asp:Label ID="lbl_vg_abertas" runat="server" CssClass="texto12">0</asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Fechadas:</td>
+            <td>
+                <asp:Label ID="lbl_vg_fechadas" runat="server" CssClass="texto12">0</asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                No Prazo:</td>
+            <td>
+                <asp:Label ID="lbl_vg_noprazo" runat="server" CssClass="texto12">0</asp:Label>
+            </td>
+        </tr>
+        <tr>
+            <td align="right">
+                Atrasadas:</td>
+            <td>
+                <asp:Label ID="lbl_vg_atrasadas" runat="server" CssClass="texto12">0</asp:Label>
+            </td>
+        </tr>
+        <tr runat="server" id="tr_distribuir">
+            <td align="right" style="color: #FF0000">
+                À Distribuir:</td>
+            <td>
+                <asp:Label ID="lbl_vg_distribuir" runat="server" CssClass="texto12" 
+                    ForeColor="Red">0</asp:Label>
+            </td>
+        </tr>
+    </table>
+    </td>
+                <td width="2%">&nbsp;
+                </td>
+                <td width="29%" valign="top">
+                    <table align="center" cellpadding="4" cellspacing="4" class="texto12" 
+                        width="98%">
+                        <tr>
+                            <td align="right">
+                                &nbsp;</td>
+                            <td width="25%">
+                                &nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                Ativos:</td>
+                            <td width="25%">
+                                <asp:Label ID="lbl_cv_ativos" runat="server" CssClass="texto12">0</asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                Incluídos no Último Mês:</td>
+                            <td width="25%">
+                                <asp:Label ID="lbl_cv_ult_mes" runat="server" CssClass="texto12">0</asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                Incluídos na Última Semana:</td>
+                            <td width="25%">
+                                <asp:Label ID="lbl_cv_ult_semana" runat="server" CssClass="texto12">0</asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" class="style1">
+                            </td>
+                            <td class="style1" width="25%">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                &nbsp;</td>
+                            <td width="25%">
+                                &nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="2%">&nbsp;
+                </td>
+                <td width="38%" class="texto" valign="top">
+                    &nbsp;<asp:GridView ID="gridAdmissoes" runat="server" AllowSorting="True" 
+                        AutoGenerateColumns="False" CaptionAlign="Left" CellPadding="4" 
+                        CssClass="texto12" DataKeyNames="id_vaga" EnableTheming="True" 
+                        ForeColor="#4D4D4D" GridLines="None" HorizontalAlign="Center" 
+                        ShowHeader="False" style="margin-right: 0px" Width="100%" 
+                        AllowPaging="True" PageSize="8" Font-Size="11px">
+                        <AlternatingRowStyle BackColor="White" />
+                        <Columns>
+                            <asp:HyperLinkField DataTextField="id_vaga" HeaderText="Id_vaga">
+                            <ItemStyle Width="15%" />
+                            </asp:HyperLinkField>
+                            <asp:BoundField DataField="nm_colaborador" HeaderText="Candidato" 
+                                SortExpression="nm_colaborador" />
+                            <asp:BoundField DataField="ds_login" HeaderText="Resp." />
+                        </Columns>
+                        <EditRowStyle BackColor="#69B9E4" />
+                        <FooterStyle BackColor="#DEE4EF" CssClass="texto" Font-Bold="True" 
+                            ForeColor="White" />
+                        <HeaderStyle BackColor="#4b6c9e" Font-Bold="True" Font-Size="X-Small" 
+                            ForeColor="White" HorizontalAlign="Left" />
+                        <PagerSettings Visible="False" />
+                        <PagerStyle BackColor="#4B6C9E" ForeColor="White" HorizontalAlign="Center" />
+                        <RowStyle BackColor="#DEE4EF" Wrap="True"  />
+                        <SelectedRowStyle BackColor="#D3EBF8" Font-Bold="True" ForeColor="#4A4A4A" />
+                        <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                        <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                        <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                        <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                    </asp:GridView>
+                </td>
+    </tr>
+                <tr>
+            <td width="29%" >&nbsp;</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="29%" >
+           
+                &nbsp;</td>
+            <td width="2%" align="right" >
+           
+                &nbsp;</td>
+            <td width="38%" >
+           
+                &nbsp;</td>
+        </tr>
+    </table>
+   </ContentTemplate >
+     </asp:UpdatePanel>
+
+
+    <div class="barranavegacaoesq">
+    <!--
+        <ul class="nav">
+            <li><asp:LinkButton ID="lk_voltar_footer"  runat="server">Voltar</asp:LinkButton></li>
+        </ul>
+    </div>
+    -->
+</div>
+</asp:Content>

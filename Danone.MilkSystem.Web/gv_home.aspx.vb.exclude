@@ -1,0 +1,705 @@
+﻿Imports AlmaViva.AlmaVivaSystem.Business
+Imports RK.GlobalTools.Tools
+
+Public Class gv_home
+    Inherits Page
+    Private customPage As RK.PageTools.CustomPage
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        customPage = MenuTools.getInitialContext(HttpContext.Current, "gv_home.aspx")
+        If Not Page.IsPostBack Then
+            loadDetails()
+        End If
+
+    End Sub
+    Private Sub loadDetails()
+
+        Try
+            Dim usuario As New Usuario(Convert.ToInt32(Session("id_login")))
+            ViewState.Item("st_administrador") = usuario.st_administrador
+            'fran 16/05/2013 i
+            If usuario.id_empresa.ToString.Trim.Equals("2") Then 'se for empresa coligada
+                ViewState.Item("coligada") = "S"
+            Else
+                ViewState.Item("coligada") = "N"
+            End If
+            'fran 16/05/2013 f
+
+            'fran 11/07/2013 i
+            'If usuario.st_consultoramaster.ToString.Trim.Equals("S")  Then
+            If usuario.st_consultoramaster.ToString.Trim.Equals("S") Or usuario.st_administrador.ToString.Trim.Equals("S") Then 'fran 17/07/2013
+                ViewState.Item("st_consultoramaster") = "S"
+                cbo_visao.Items.Insert(0, New ListItem("Todas as Vagas", "4"))
+                tr_distribuir.Visible = True
+
+            Else
+                ViewState.Item("st_consultoramaster") = "N"
+                tr_distribuir.Visible = False
+
+            End If
+            'fran 11/07/2013 f
+
+            'fran 17/07/2013 i se for administrador nao precisa ver outras visoes, apenas Todas as vagas
+            If usuario.st_administrador.ToString.Trim.Equals("S") Then
+                cbo_visao.SelectedValue = "4" 'todas as vagas 'administrador so ve todas as vagas
+                cbo_visao.Enabled = False
+            End If
+
+
+            'fran 6/05/2013 i
+            'Assume parametros para visao MINHAS VAGAS e COLIGADAS
+            ViewState.Item("id_consultoraresponsavel") = Session("id_login").ToString '
+            'ViewState.Item("id_consultorasupervisora") = "0"
+            ViewState.Item("id_consultorasupervisora") = Session("id_login").ToString  ' Adri 02/07/2013
+
+            'fran 6/05/2013 i
+
+            loadData()
+            ' loadFilters()
+
+
+        Catch ex As Exception
+            RK.PageTools.WebMsgBox.Show(ex.Message)
+
+        End Try
+
+    End Sub
+    'Private Sub loadFilters()
+
+    '    Dim hasFilters As Boolean
+
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", cbo_situacao.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("id_situacaoadmissao") = customPage.getFilterValue("lstcolaborador", cbo_situacao.ID)
+    '        cbo_situacao.SelectedValue = ViewState.Item("id_situacaoadmissao").ToString()
+    '    Else
+    '        ViewState.Item("id_situacaoadmissao") = String.Empty
+    '    End If
+
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", txt_nome_colaborador.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("nm_colaborador") = customPage.getFilterValue("lstcolaborador", txt_nome_colaborador.ID)
+    '        txt_nome_colaborador.Text = ViewState.Item("nm_colaborador").ToString()
+    '    Else
+    '        ViewState.Item("nm_colaborador") = String.Empty
+    '    End If
+
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", txt_cpf.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("cd_cpf") = customPage.getFilterValue("lstcolaborador", txt_cpf.ID)
+    '        txt_cpf.Text = ViewState.Item("cd_cpf").ToString()
+    '    Else
+    '        ViewState.Item("cd_cpf") = String.Empty
+    '    End If
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", txt_cod_cliente_gi.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("cd_cliente") = customPage.getFilterValue("lstcolaborador", txt_cod_cliente_gi.ID)
+    '        txt_cod_cliente_gi.Text = ViewState.Item("cd_cliente").ToString()
+    '    Else
+    '        ViewState.Item("cd_cliente") = String.Empty
+    '    End If
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", txt_dt_inicio.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("dt_inicio") = customPage.getFilterValue("lstcolaborador", txt_dt_inicio.ID)
+    '        txt_dt_inicio.Text = ViewState.Item("dt_inicio").ToString()
+    '    Else
+    '        ViewState.Item("dt_inicio") = String.Empty
+    '    End If
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", txt_dt_fim.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("dt_fim") = customPage.getFilterValue("lstcolaborador", txt_dt_fim.ID)
+    '        txt_dt_fim.Text = ViewState.Item("dt_fim").ToString()
+    '    Else
+    '        ViewState.Item("dt_fim") = String.Empty
+    '    End If
+
+    '    ' 02/03/2012 - chamado 1476 - i
+    '    If Not (customPage.getFilterValue("lstcolaborador", cbo_empresa.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("id_empresa") = customPage.getFilterValue("lstcolaborador", cbo_empresa.ID)
+    '        cbo_empresa.SelectedValue = ViewState.Item("id_empresa").ToString()
+    '    Else
+    '        ViewState.Item("id_empresa") = String.Empty
+    '    End If
+
+    '    If Not (customPage.getFilterValue("lstcolaborador", cbo_filial.ID).Equals(String.Empty)) Then
+    '        hasFilters = True
+    '        ViewState.Item("id_filial") = customPage.getFilterValue("lstcolaborador", cbo_filial.ID)
+    '        cbo_filial.SelectedValue = ViewState.Item("id_filial").ToString()
+    '    Else
+    '        ViewState.Item("id_filial") = String.Empty
+    '    End If
+    '    ' 02/03/2012 - chamado 1476 - f
+
+    '    If (hasFilters) Then
+    '        loadData()
+    '        customPage.clearFilters("lstcolaborador")
+    '    End If
+
+
+    'End Sub
+    'Private Sub saveFilters()
+
+    '    Try
+
+
+    '        customPage.setFilter("lstcolaborador", txt_nome_colaborador.ID, ViewState.Item("nm_colaborador").ToString)
+    '        customPage.setFilter("lstcolaborador", txt_cpf.ID, ViewState.Item("cd_cpf").ToString)
+    '        customPage.setFilter("lstcolaborador", txt_cod_cliente_gi.ID, ViewState.Item("cd_cliente").ToString)
+    '        customPage.setFilter("lstcolaborador", cbo_situacao.ID, ViewState.Item("id_situacaoadmissao").ToString)
+    '        customPage.setFilter("lstcolaborador", txt_dt_inicio.ID, ViewState.Item("dt_inicio").ToString)
+    '        customPage.setFilter("lstcolaborador", txt_dt_fim.ID, ViewState.Item("dt_fim").ToString)
+    '        customPage.setFilter("lstcolaborador", cbo_empresa.ID, ViewState.Item("id_empresa").ToString) ' 02/03/2012 - chamado 1476 - f
+    '        customPage.setFilter("lstcolaborador", cbo_filial.ID, ViewState.Item("id_filial").ToString)  ' 02/03/2012 - chamado 1476 - f
+
+    '        customPage.setFilter("lstcolaborador", "PageIndex", gridResults.PageIndex.ToString())
+
+    '    Catch ex As Exception
+    '        RK.PageTools.WebMsgBox.Show(ex.Message)
+    '    End Try
+
+    'End Sub
+
+
+    'Protected Sub lk_novo_Click(ByVal sender As Object, ByVal e As EventArgs) Handles lk_novo.Click
+    '    Response.Redirect("ad_frm_colaborador.aspx")
+    'End Sub
+    'Protected Sub btn_pesquisar_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btn_pesquisar.Click
+    '    ViewState.Item("nm_colaborador") = txt_nome_colaborador.Text
+    '    ViewState.Item("cd_cpf") = txt_cpf.Text
+    '    ViewState.Item("cd_cliente") = txt_cod_cliente_gi.Text
+    '    ViewState.Item("dt_inicio") = txt_dt_inicio.Text
+    '    ViewState.Item("dt_fim") = txt_dt_fim.Text
+    '    ViewState.Item("id_situacaoadmissao") = cbo_situacao.SelectedValue
+    '    ViewState.Item("id_empresa") = cbo_empresa.SelectedValue  ' 02/03/2012 - chamado 1476
+    '    ViewState.Item("id_filial") = cbo_filial.SelectedValue  ' 02/03/2012 - chamado 1476
+
+    '    loadData()
+    'End Sub
+
+
+
+    Private Sub loadData()
+
+        Try
+
+
+            lbl_data_now.Text = DateTime.Now.ToString("dd/MM/yyyy")
+            lbl_horas_now.Text = Left(DateTime.Now.TimeOfDay.ToString, 8)
+
+
+            '**************************************************************
+            'VAGAS EM ANDAMENTO
+            '**************************************************************
+            Dim vaga As New Vaga
+
+            'Fran 16/05/2013 i - retirar administrador
+            ''se for administrador tarz todas as vagas abertas
+            'If ViewState.Item("st_administrador").ToString.Trim.Equals("S") Then
+            '    vaga.id_consultoraresponsavel = 0
+            'Else
+            '    vaga.id_consultoraresponsavel = Convert.ToInt32(Session("id_login"))
+            'End If
+            If ViewState.Item("coligada").ToString.Equals("S") Then 'se forcoligada 
+                'nao visualiza combo pois coligada nao tem supervisora
+                lbl_visao.Visible = False
+                cbo_visao.Visible = False
+            Else
+                'visualiza combo 
+                lbl_visao.Visible = True
+                cbo_visao.Visible = True
+
+            End If
+            'Fran 16/05/2013 f
+            'Fran 06/05/2013 i
+            vaga.id_consultoraresponsavel = Convert.ToInt32(ViewState.Item("id_consultoraresponsavel").ToString)
+            vaga.id_consultorasupervisora = Convert.ToInt32(ViewState.Item("id_consultorasupervisora").ToString)
+            'Fran 6/05/2013 f
+
+            ViewState.Item("lbl_total_vagas") = "0"
+            'traz todas as vagas em andamento da consultora independente da data de criação
+            'fran 11/07/2013 i
+            Dim dsVagasAndamento As DataSet
+            If cbo_visao.SelectedValue.Trim.ToString.Equals("4") Then 'todas as vagas
+                dsVagasAndamento = vaga.getMinhasVagasMaster
+            Else
+                dsVagasAndamento = vaga.getMinhasVagas
+            End If
+            'fran 11/07/2013 f
+
+            ViewState.Item("lbl_total_vagas") = 0
+            If (dsVagasAndamento.Tables(0).Rows.Count > 0) Then
+                gridResults.Visible = True
+                gridResults.DataSource = Helper.getDataView(dsVagasAndamento.Tables(0), ViewState.Item("sortExpression"))
+                gridResults.DataBind()
+
+                'fran 16/05/2013 i
+                If ViewState.Item("coligada").ToString.Equals("S") Then 'se forcoligada 
+                    'nao visualiza coluna logi8n responsavel
+                    gridResults.Columns(12).Visible = False
+                End If
+                'fran 16/05/2013 f
+
+                lbl_total_vagas.Visible = True
+                lbl_total_vaga_texto.Visible = True
+                'fran 17/07/2013 i
+                If cbo_visao.SelectedValue.Trim.ToString.Equals("4") Then 'todas as vagas
+                    ViewState.Item("lbl_total_vagas") = vaga.getMinhasVagasCountMaster.ToString
+                Else
+                    'fran 17/07/2013 f
+                    ViewState.Item("lbl_total_vagas") = vaga.getMinhasVagasCount.ToString
+
+                End If
+
+            Else
+                gridResults.Visible = False
+                'gridResults.DataSource = Helper.getDataView(dsVagasAndamento.Tables(0), ViewState.Item("sortExpression"))
+                'gridResults.DataBind()
+                RK.PageTools.WebMsgBox.Show("Nenhum registro foi encontrado. Por favor tente novamente.")
+
+                lbl_total_vagas.Visible = False
+                lbl_total_vaga_texto.Visible = False
+            End If
+
+            lbl_total_vagas.Text = String.Concat(ViewState.Item("lbl_total_vagas").ToString, " Vagas")
+
+
+            '*************************************************************************************
+            'TOTALIZADORES DE VAGAS
+            '*************************************************************************************
+            ViewState.Item("dt_fim_periodo") = Date.Now.ToString("dd/MM/yyyy")
+            Select Case cbo_periodo.SelectedValue
+                Case 1 '30dias
+                    ViewState.Item("dt_inicio_periodo") = DateAdd(DateInterval.Day, -30, Date.Now).ToString("dd/MM/yyyy")
+                Case 2 '60 dias
+                    ViewState.Item("dt_inicio_periodo") = DateAdd(DateInterval.Day, -60, Date.Now).ToString("dd/MM/yyyy")
+                Case 3 '90 dias
+                    ViewState.Item("dt_inicio_periodo") = DateAdd(DateInterval.Day, -90, Date.Now).ToString("dd/MM/yyyy")
+                    'fran 26/04/2013 i
+                Case 4 'Tudo
+                    ViewState.Item("dt_inicio_periodo") = "01/01/2000" 'Data que aionda nao existia Life indicando para pegar tudo da base
+                    'fran 26/04/2013 f
+
+            End Select
+
+            loadTotalizadoresVaga()
+
+            '****************************************************************************************
+            'GRAFICO DE VAGAS (deve vir sempre depois dos totalizadores por causa da busca do total de vagas)
+            '****************************************************************************************
+
+            loadGrafico()
+
+            '*****************************************************************************************
+            'CURRICULOS
+            '*****************************************************************************************
+
+            Dim cv As New Candidato
+
+            'Candidatos ativos
+            lbl_cv_ativos.Text = cv.getCandidatosCount.ToString
+
+            'candidatos incluidos no ultimomes
+            cv.dt_criacao = DateAdd(DateInterval.Month, -1, Date.Now).ToString("dd/MM/yyyy")
+            lbl_cv_ult_mes.Text = cv.getCandidatosCount.ToString
+
+            'candidatos incluidos na ultima semana
+            cv.dt_criacao = DateAdd(DateInterval.Day, -7, Date.Now).ToString("dd/MM/yyyy")
+            lbl_cv_ult_semana.Text = cv.getCandidatosCount.ToString
+
+            '*****************************************************************************************
+            'Admissões
+            '*****************************************************************************************
+            'ultimas 5 admissões feitas concluidas das vagas da consultora
+            Dim dsAdmissoes As New DataTable
+            Dim i As Integer = 0
+            Dim row As DataRow
+            Dim rowadm As DataRow
+
+
+            dsAdmissoes.Rows.Clear()
+            dsAdmissoes.Columns.Add("id_vaga")
+            dsAdmissoes.Columns.Add("nm_colaborador")
+            dsAdmissoes.Columns.Add("ds_login") 'fran 16/05/2013
+
+            'Fran 16/05/2013 i - retirar administrador
+            ''se for administrador tarz todas as vagas abertas
+            'If ViewState.Item("st_administrador").ToString.Trim.Equals("S") Then
+            '    vaga.id_consultoraresponsavel = 0
+            'Else
+            '    vaga.id_consultoraresponsavel = Convert.ToInt32(Session("id_login"))
+            'End If
+            'Fran 16/05/2013 f
+            'Fran 06/05/2013 i
+            vaga.id_consultoraresponsavel = Convert.ToInt32(ViewState.Item("id_consultoraresponsavel").ToString)
+            vaga.id_consultorasupervisora = Convert.ToInt32(ViewState.Item("id_consultorasupervisora").ToString)
+            'Fran 66/05/2013 f
+
+            'fran 11/07/2013 i
+            'Dim dscolaboradoresvaga As DataSet = vaga.getColaboradorFinalizado
+
+            Dim dscolaboradoresvaga As DataSet
+            If cbo_visao.SelectedValue.Trim.ToString.Equals("4") Then 'todas as vagas
+                dscolaboradoresvaga = vaga.getColaboradorFinalizadoMaster
+            Else
+                dscolaboradoresvaga = vaga.getColaboradorFinalizado
+            End If
+            'fran 11/07/2013 f
+            'se tem admissoes realizadas
+            'If dscolaboradoresvaga.Tables(0).Rows.Count > 0 Then
+            'Pega as 8 ultimas e guarda para incluir nogrid
+            For Each row In dscolaboradoresvaga.Tables(0).Rows
+                'fran 11/07/2013 i
+                'If i <= 7 Then
+                If i <= 8 Then
+                    'fran 11/07/2013 f
+
+                    rowadm = dsAdmissoes.NewRow
+                    rowadm.Item(0) = row.Item("id_vaga").ToString
+                    rowadm.Item(1) = row.Item("nm_colaborador").ToString
+                    rowadm.Item(2) = row.Item("ds_login").ToString 'fran 16/05/2013
+                    dsAdmissoes.Rows.InsertAt(rowadm, i)
+
+                    i = i + 1
+                Else
+                    Exit For
+                End If
+            Next
+            'Joga as 5 ultimas no grid
+            gridAdmissoes.Visible = True
+            gridAdmissoes.DataSource = Helper.getDataView(dsAdmissoes, "")
+            gridAdmissoes.DataBind()
+            'fran 16/05/2013 i
+            If ViewState.Item("coligada").ToString.Equals("S") Then 'se forcoligada 
+                'nao visualiza coluna de login responsavel
+                gridAdmissoes.Columns(2).Visible = False
+            End If
+            'fran 16/05/2013 f
+
+            'End If
+
+
+        Catch ex As Exception
+            RK.PageTools.WebMsgBox.Show(ex.Message)
+        End Try
+
+    End Sub
+
+    Protected Sub gridResults_PageIndexChanging(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewPageEventArgs) Handles gridResults.PageIndexChanging
+        gridResults.PageIndex = e.NewPageIndex
+        Me.loadData()
+
+    End Sub
+
+
+
+
+    Private Sub gridResults_RowDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewRowEventArgs) Handles gridResults.RowDataBound
+        If (e.Row.RowType <> DataControlRowType.Header _
+And e.Row.RowType <> DataControlRowType.Footer _
+And e.Row.RowType <> DataControlRowType.Pager) Then
+
+            Dim lbl_total_vagas As Label = CType(e.Row.FindControl("lbl_total_vagas"), Label)
+            Dim lbl_qtde_vagas As Label = CType(e.Row.FindControl("lbl_qtde_vagas"), Label)
+            Dim lbl_vagas_abertas As Label = CType(e.Row.FindControl("lbl_vagas_abertas"), Label) 'fran 26/04/2013
+            Dim lbl_nr_vagas_fechadas As Label = CType(e.Row.FindControl("lbl_nr_vagas_fechadas"), Label) 'fran 26/04/2013
+            Dim lbl_candidatos_selecionados As Label = CType(e.Row.FindControl("lbl_candidatos_selecionados"), Label)
+            Dim lbl_candidatos_aprovados As Label = CType(e.Row.FindControl("lbl_candidatos_aprovados"), Label)
+
+            'Coluna Vagas
+            If Not lbl_qtde_vagas.Text.Trim.Equals(String.Empty) Then
+                lbl_total_vagas.Text = String.Concat(lbl_qtde_vagas.Text.Trim, " Vagas")
+            Else
+                lbl_qtde_vagas.Text = 0
+                lbl_total_vagas.Text = "0 Vagas"
+            End If
+
+            'fran 26/04/2013 i
+            If lbl_nr_vagas_fechadas.Text.Trim.Equals(String.Empty) Then
+                lbl_nr_vagas_fechadas.Text = "0"
+            End If
+
+            'Coluna Vagas Abertas
+            lbl_vagas_abertas.Text = String.Concat((CLng(lbl_qtde_vagas.Text) - CLng(lbl_nr_vagas_fechadas.Text)).ToString, " Abertas")
+            'fran 26/04/2013 f
+
+            Dim candvaga As New CandidatoVaga
+            Dim countCandVaga As Int32
+
+            'Coluna Cand Selecionados
+            candvaga.id_vaga = Convert.ToInt32(gridResults.DataKeys.Item(e.Row.RowIndex).Value())
+
+            'nome vaga
+            If Not (e.Row.Cells(2).Text.Trim.Equals(String.Empty)) Then
+                e.Row.Cells(2).Text = Left(e.Row.Cells(2).Text.Trim, 20) 'trunca em 20 posições
+            End If
+
+            'Busca todos os candidatos para a vaga
+            countCandVaga = candvaga.getCountCandidatosbyVaga
+            lbl_candidatos_selecionados.Text = String.Concat(countCandVaga.ToString, " Selec.")
+
+            'Coluna Cand Aprovados
+            candvaga.st_admitido = "S"
+            'Busca todos os candidatos selecionados/aprovados para a vaga
+            countCandVaga = candvaga.getCountCandidatosbyVaga
+            lbl_candidatos_aprovados.Text = String.Concat(countCandVaga.ToString, " Aprovados")
+
+            'fran 22/04/2013
+            'ViewState.Item("lbl_total_vagas") = CInt(ViewState.Item("lbl_total_vagas")) + CInt(lbl_qtde_vagas.Text)
+
+            ' Fran 22/04/2013 - i
+            Dim img_semaforo As Image = CType(e.Row.FindControl("img_semaforo"), Image)
+            Dim lbl_dias_usados As Label = CType(e.Row.FindControl("lbl_dias_usados"), Label)
+            Dim lbl_total_dias_sla As Label = CType(e.Row.FindControl("lbl_total_dias_sla"), Label)
+
+            'Se os dias passados já ultrapassram o prazo do SLA, significa que o SLA está estourado e deve ficar em vermelho	 							
+            If IsNumeric(lbl_dias_usados.Text) And IsNumeric(lbl_total_dias_sla.Text) Then
+                If Convert.ToDecimal(lbl_dias_usados.Text) >= Convert.ToDecimal(lbl_total_dias_sla.Text) Then
+                    img_semaforo.ImageUrl = "img/icon_status_vermelho.gif"
+                Else  'Se ainda não estourou o SLA
+                    'se falta 30% ou menos do tempo para estourar o sla, mostra em amarelo
+                    If 100 - ((Convert.ToDecimal(lbl_dias_usados.Text) * 100) / Convert.ToDecimal(lbl_total_dias_sla.Text)) <= 30 Then
+                        img_semaforo.ImageUrl = "img/icon_status_amarelo.gif"
+                    Else
+                        img_semaforo.ImageUrl = "img/icon_status_verde.gif"
+                    End If
+                End If
+            End If
+            ' Fran 22/04/2013 - f
+
+
+        End If
+    End Sub
+    Protected Sub gridResults_RowDeleting(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewDeleteEventArgs) Handles gridResults.RowDeleting
+        e.Cancel = True
+    End Sub
+
+    Protected Sub gridResults_Sorting(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.GridViewSortEventArgs) Handles gridResults.Sorting
+
+        'Select Case e.SortExpression.ToLower()
+
+
+        '    Case "nm_colaborador"
+        '        If (ViewState.Item("sortExpression")) = "nm_colaborador asc" Then
+        '            ViewState.Item("sortExpression") = "nm_colaborador desc"
+        '        Else
+        '            ViewState.Item("sortExpression") = "nm_colaborador asc"
+        '        End If
+
+        '    Case "cd_cpf"
+        '        If (ViewState.Item("sortExpression")) = "cd_cpf asc" Then
+        '            ViewState.Item("sortExpression") = "cd_cpf desc"
+        '        Else
+        '            ViewState.Item("sortExpression") = "cd_cpf asc"
+        '        End If
+
+
+        '    Case "dt_admissao"
+        '        If (ViewState.Item("sortExpression")) = "dt_admissao asc" Then
+        '            ViewState.Item("sortExpression") = "dt_admissao desc"
+        '        Else
+        '            ViewState.Item("sortExpression") = "dt_admissao asc"
+        '        End If
+
+
+        '    Case "ds_cliente"
+        '        If (ViewState.Item("sortExpression")) = "ds_cliente asc" Then
+        '            ViewState.Item("sortExpression") = "ds_cliente desc"
+        '        Else
+        '            ViewState.Item("sortExpression") = "ds_cliente asc"
+        '        End If
+
+        '    Case "nm_situacaoadmissao"
+        '        If (ViewState.Item("sortExpression")) = "nm_situacaoadmissao asc" Then
+        '            ViewState.Item("sortExpression") = "nm_situacaoadmissao desc"
+        '        Else
+        '            ViewState.Item("sortExpression") = "nm_situacaoadmissao asc"
+        '        End If
+
+
+        '        'Mirella 03/04/2012 chamado 1516 i
+
+        '    Case "cd_colaborador"
+        '        If (ViewState.Item("sortExpression")) = "cd_colaborador asc" Then
+        '            ViewState.Item("sortExpression") = "cd_colaborador desc"
+        '        Else
+        '            ViewState.Item("sortExpression") = "cd_colaborador asc"
+        '        End If
+        '        'Mirella 03/04/2012 chamado 1516 f
+        'End Select
+
+        'loadData()
+
+    End Sub
+
+    Private Sub loadTotalizadoresVaga()
+
+        Try
+
+            Dim vaga As New Vaga
+            'se for administrador 
+            'Fran 16/05/2013 i - retirar administrador
+            ''se for administrador 
+            'If ViewState.Item("st_administrador").ToString.Trim.Equals("S") Then
+            '    vaga.id_consultoraresponsavel = 0
+            'Else
+            '    vaga.id_consultoraresponsavel = Convert.ToInt32(Session("id_login"))
+            'End If
+            'Fran 16/05/2013 f
+            'Fran 06/05/2013 i
+            vaga.id_consultoraresponsavel = Convert.ToInt32(ViewState.Item("id_consultoraresponsavel").ToString)
+            vaga.id_consultorasupervisora = Convert.ToInt32(ViewState.Item("id_consultorasupervisora").ToString)
+            'Fran 66/05/2013 f
+
+            vaga.dt_abertura_ini = ViewState.Item("dt_inicio_periodo").ToString
+            vaga.dt_abertura_fim = ViewState.Item("dt_fim_periodo").ToString
+            lbl_vg_abertas.Text = "0"
+            lbl_vg_atrasadas.Text = "0"
+            lbl_vg_cadastradas.Text = "0"
+            lbl_vg_fechadas.Text = "0"
+            lbl_vg_noprazo.Text = "0"
+
+            Dim li As Int32
+            Dim lTotalVagas As Int32 = 0
+
+            'fran 11/07/2013 i
+            'Dim dsvagatotalizadores As DataSet = vaga.getVagasTotalizadores()
+            Dim dsvagatotalizadores As DataSet
+            If cbo_visao.SelectedValue.Trim.ToString.Equals("4") Then 'todas as vagas
+                dsvagatotalizadores = vaga.getVagasTotalizadoresMaster
+            Else
+                dsvagatotalizadores = vaga.getVagasTotalizadores
+            End If
+            'fran 11/07/2013 f
+            Me.lbl_vg_distribuir.Text = "0"
+            If (dsvagatotalizadores.Tables(0).Rows.Count > 0) Then
+                For li = 0 To dsvagatotalizadores.Tables(0).Rows.Count - 1
+                    Select Case dsvagatotalizadores.Tables(0).Rows(li).Item("seq")
+                        Case 1 'Vagas abertas (abertas - fechadas)
+                            Me.lbl_vg_abertas.Text = dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas")
+                            lTotalVagas = lTotalVagas + Convert.ToInt32(dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas"))
+                        Case 3 'Vagas Fechadas
+                            Me.lbl_vg_fechadas.Text = dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas")
+                            lTotalVagas = lTotalVagas + Convert.ToInt32(dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas"))
+                        Case 4 'Vagas Canceladas na 
+                            ' Me.lbl_vagas_canc.Text = dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas")
+                        Case 5 'Vagas Abertas No Prazo (abertas-fechadas cujo sla seja >= data de hoje)
+                            Me.lbl_vg_noprazo.Text = dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas")
+                        Case 6 'Vagas Abertas Fora Prazo (abertas-fechadas cujo sla seja < data de hoje)
+                            Me.lbl_vg_atrasadas.Text = dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas")
+                        Case 7 'Vagas a Distribuir 'fran 11/07/2013
+                            Me.lbl_vg_distribuir.Text = dsvagatotalizadores.Tables(0).Rows(li).Item("TotalVagas")
+                            If Not lbl_vg_distribuir.Text.ToString.Equals(String.Empty) Then
+                                If ViewState.Item("st_consultoramaster").ToString.Equals("S") Then
+                                    lTotalVagas = lTotalVagas + CInt(lbl_vg_distribuir.Text) 'fran 17/07/2013 sse for consultora master, somar as vagas cadastradas o total das a distribuir
+                                End If
+                            End If
+                           
+                    End Select
+                Next
+
+                Me.lbl_vg_cadastradas.Text = lTotalVagas
+            End If
+
+
+
+
+        Catch ex As Exception
+            RK.PageTools.WebMsgBox.Show(ex.Message)
+        End Try
+
+    End Sub
+    Private Sub loadGrafico()
+
+        Try
+
+            Dim yVagas() As Double = {lbl_vg_abertas.Text, lbl_vg_fechadas.text}
+
+            'define os valoes do eixo x - tipo das vagas
+            Dim xTipoVaga() As String = {"Abertas", "Fechadas"}
+
+
+            With Chart1
+                'habilita a visão em 3D
+                .ChartAreas(0).Area3DStyle.Enable3D = True
+                'define inclinação, rotação e perspectiva
+                .ChartAreas(0).Area3DStyle.Inclination = 20
+                .ChartAreas(0).Area3DStyle.Rotation = 50
+                .ChartAreas(0).Area3DStyle.Perspective = 10
+                'define o estilo da linha
+                .ChartAreas(0).Area3DStyle.LightStyle = DataVisualization.Charting.LightStyle.Realistic
+                'vincula os dados ao gráfico
+                .Series(0).Points.DataBindXY(xTipoVaga, yVagas)
+                'exibe os valores no eixo do gráfico
+                .Series(0).IsValueShownAsLabel = True
+
+            End With
+
+
+
+        Catch ex As Exception
+            RK.PageTools.WebMsgBox.Show(ex.Message)
+        End Try
+
+    End Sub
+    Protected Sub cbo_periodo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_periodo.SelectedIndexChanged
+        ViewState.Item("dt_fim_periodo") = Date.Now.ToString("dd/MM/yyyy")
+        Select Case cbo_periodo.SelectedValue
+            Case 1 '30dias
+                ViewState.Item("dt_inicio_periodo") = DateAdd(DateInterval.Day, -30, Date.Now).ToString("dd/MM/yyyy")
+            Case 2 '60 dias
+                ViewState.Item("dt_inicio_periodo") = DateAdd(DateInterval.Day, -60, Date.Now).ToString("dd/MM/yyyy")
+            Case 3 '90 dias
+                ViewState.Item("dt_inicio_periodo") = DateAdd(DateInterval.Day, -90, Date.Now).ToString("dd/MM/yyyy")
+                'fran 26/04/2013 i
+            Case 4 'Tudo
+                ViewState.Item("dt_inicio_periodo") = "01/01/2000" 'Data que aionda nao existia Life indicando para pegar tudo da base
+                'fran 26/04/2013 f
+
+        End Select
+        loadTotalizadoresVaga()
+        loadGrafico()
+    End Sub
+
+    Protected Sub cbo_irpara_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_irpara.SelectedIndexChanged
+        ' adri 22/04/2013 - i
+        If cbo_irpara.SelectedValue <> 0 Then
+            Response.Redirect("gv_lst_vaga.aspx?id_periodo=" + Convert.ToString(cbo_irpara.SelectedValue))
+        End If
+        ' adri 22/04/2013 - f
+
+    End Sub
+
+    Protected Sub cbo_visao_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbo_visao.SelectedIndexChanged
+
+        'fran 6/05/2013 i
+        Select Case cbo_visao.SelectedValue
+            Case 1 'Minhas Vagas
+                'Assume parametros para visao MINHAS VAGAS
+                ViewState.Item("id_consultoraresponsavel") = Session("id_login").ToString '
+                ViewState.Item("id_consultorasupervisora") = "0"
+                'tr_distribuir.Visible = False 'fran 15/07/2013
+            Case 2 'Coligadas
+                'Assume parametros para visao COLigadas
+                ViewState.Item("id_consultoraresponsavel") = "0"
+                ViewState.Item("id_consultorasupervisora") = Session("id_login").ToString
+                'tr_distribuir.Visible = False 'fran 15/07/2013
+            Case 3 'Minhas Vagas e COLigadas
+                'Assume parametros para visao Minhas Vagas e COLigadas
+                ViewState.Item("id_consultoraresponsavel") = Session("id_login").ToString
+                ViewState.Item("id_consultorasupervisora") = Session("id_login").ToString
+                'tr_distribuir.Visible = False 'fran 15/07/2013
+                'Case 4 'Todas as Vagas
+                '    tr_distribuir.Visible = True 'fran 15/07/2013
+        End Select
+
+        loadData()
+        'fran 6/05/2013 i
+    End Sub
+End Class

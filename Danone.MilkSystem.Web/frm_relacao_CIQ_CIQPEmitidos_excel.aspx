@@ -1,0 +1,53 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="frm_relacao_CIQ_CIQPEmitidos_excel.aspx.vb" Inherits="frm_relacao_CIQ_CIQPEmitidos_excel" %>
+
+<%@ Register Assembly="RK.Ajax.AlertControl" Namespace="RK.Ajax.AlertControl" TagPrefix="cc2" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>Untitled Page</title>
+</head>
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+    <form id="form1" runat="server">
+    <div>
+        <asp:GridView ID="gridResults" runat="server" AutoGenerateColumns="False" CellPadding="2"
+            ForeColor="#333333" GridLines="None" Width="100%">
+            <RowStyle BackColor="#EFF3FB" HorizontalAlign="Center" />
+            <Columns>
+                <asp:BoundField DataField="dt_hora_entrada" HeaderText="Data de Entrada" SortExpression="dt_hora_entrada" />
+                <asp:BoundField DataField="id_romaneio" HeaderText="N&#186; Romaneio" SortExpression="id_romaneio" />
+                <asp:BoundField DataField="nm_rota" HeaderText="Nome Rota" />
+                <asp:BoundField DataField="ds_placa" HeaderText="Placa" />
+                <asp:BoundField DataField="nm_compartimento" HeaderText="Compartimento" />
+                <asp:BoundField DataField="id_romaneio_compartimento" HeaderText="N&#186; CIQ" />
+                <asp:BoundField DataField="id_romaneio_uproducao" HeaderText="N&#186; CIQP" />
+                                                <asp:TemplateField HeaderText="Qtd. N&#227;o Conf.">
+                                                    <itemtemplate>
+<asp:Label id="lbl_nr_total_litros" runat="server" Text='<%# Bind("nr_total_litros") %>'></asp:Label>
+</itemtemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField HeaderText="Qtd. Rej.">
+                                                    <itemtemplate>
+<asp:Label id="lbl_nr_litros" runat="server" Text='<%# Bind("nr_litros") %>'></asp:Label>
+</itemtemplate>
+                                                </asp:TemplateField>
+               <asp:BoundField DataField="cd_pessoa" HeaderText="C&#243;d. Produtor" />
+                <asp:BoundField DataField="nm_pessoa" HeaderText="Nome Produtor" />
+                <asp:BoundField DataField="id_propriedade" HeaderText="C&#243;d. Propriedade" />
+                <asp:BoundField DataField="nr_unid_producao" HeaderText="Unidade Produ&#231;&#227;o" />
+                <asp:BoundField DataField="ds_motivo_rejeicao" HeaderText="Motivo Rejei&#231;&#227;o" />
+                <asp:BoundField DataField="ds_destino_leite" HeaderText="Destino Leite" />
+            </Columns>
+            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+            <EditRowStyle BackColor="#2461BF" />
+            <AlternatingRowStyle BackColor="White" />
+        </asp:GridView>
+        &nbsp;<cc2:alertmessages id="messageControl" runat="server"></cc2:alertmessages></div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,193 @@
+﻿
+.labelFormulario {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+}
+.labelFormularioAzul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #5e6697;
+	font-weight: bold;
+}
+.labelFormularioVermelho {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #AD3314;
+	font-weight: bold;
+}
+.tituloFormulario {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	font-weight: bold;
+}
+.textBox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	font-weight: normal;
+	border: 1px solid #8c99a9;
+}
+.borda {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000000;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #7781b2;
+	border-bottom-color: #7781b2;
+	border-left-color: #7781b2;
+}
+.tab {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background-color: #eff0f5;
+	padding: 4px;
+	border-top-width: 3px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: none;
+	border-left-style: solid;
+	border-top-color: #778b4c;
+	border-right-color: #7781b2;
+	border-left-color: #7781b2;
+}
+.linhaTab {
+	border-bottom-width: 1px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: none;
+	border-bottom-color: #7781b2;
+}
+.tabOff {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	background-color: #FFFFFF;
+	padding: 4px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #7781b2;
+	border-right-color: #7781b2;
+	border-left-color: #7781b2;
+	border-bottom-width: 1px;
+	border-bottom-color: #7781b2;
+}
+.menuTitulo {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #000000;
+}
+.menuItem {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #666666;
+}
+.menuItemSublinhado {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #666666;
+	background-color:#aac2e8
+}
+.textoStatusRodape {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.linhaTopoMenu {
+	border-top-style: solid;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-width: 1px;
+	border-top-color: #7781b2;
+}
+.tituloSistemas {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+.subTituloSistemas {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #2c639c;
+}
+
+
+.texto {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+}
+
+div.dimmer 
+{
+	visibility: hidden;
+	position:absolute;
+	left:0px;
+	top:0px;
+	font-family:verdana;
+	font-weight:bold;
+	padding:40px;
+
+	background-image:url(honey.png);
+	/* ieWin only stuff */
+	_background-image:none;
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='honey.png');
+}
+
+
+div.dimming {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-style: normal;
+	background-color: #ffffff;
+	position:absolute;
+	/* set z-index higher than possible */
+	z-index:10000;
+	visibility: hidden;
+	
+	border-style: solid;
+	border-color: #999999;
+	border-width: 1px;
+
+}
+
+table.floatingHeader
+{
+	background-color: #6D7B8D;
+	color:#ffffff;
+}
+
+
+
+
+#divpos {
+   width: 220px;
+   height: 80px;
+   position:fixed;
+   left:50%;
+   top:50%;
+   margin-left:-110px;
+   margin-top:-40px;   
+   display: none;
+   border: 1px solid #222;
+   background: #ABABAB; 
+}

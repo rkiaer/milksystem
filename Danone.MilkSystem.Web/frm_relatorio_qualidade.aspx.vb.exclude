@@ -1,0 +1,165 @@
+﻿Imports Danone.MilkSystem.Business
+Imports System.data
+Imports System.Configuration
+Imports System.Data.SqlClient
+Imports System.Data.SqlClient.SqlConnection
+Imports System.IO
+Imports System.Collections
+
+Imports CrystalDecisions.Shared
+Imports CrystalDecisions.CrystalReports.Engine
+Imports RK.GlobalTools.tools
+
+
+<Assembly: CLSCompliant(True)> 
+
+Partial Class frm_relatorio_qualidade
+    Inherits System.Web.UI.Page
+    Private WithEvents backgroundWorker1 As System.ComponentModel.BackgroundWorker
+    Dim conn As New SqlConnection
+    Public Sub New()
+
+    End Sub
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        If Not (Request("dt_referencia") Is Nothing) Then
+            ViewState.Item("dt_referencia") = Request("dt_referencia")
+        End If
+    End Sub
+
+
+    Private Sub SetDbLogonForReport(ByVal myConnectionInfo As ConnectionInfo, ByVal myReportDocument As ReportDocument)
+        Dim myTables As Tables = myReportDocument.Database.Tables
+        Dim myTable As CrystalDecisions.CrystalReports.Engine.Table
+        For Each myTable In myTables
+            Dim myTableLogonInfo As TableLogOnInfo = myTable.LogOnInfo
+            myTableLogonInfo.ConnectionInfo = myConnectionInfo
+            myTable.ApplyLogOnInfo(myTableLogonInfo)
+        Next
+    End Sub
+    Private Sub SetDbLogonForSubreports(ByVal myConnectionInfo As ConnectionInfo, ByVal myReportDocument As ReportDocument)
+        Dim mySections As Sections = myReportDocument.ReportDefinition.Sections
+        Dim mySection As Section
+        For Each mySection In mySections
+            Dim myReportObjects As ReportObjects = mySection.ReportObjects
+            Dim myReportObject As ReportObject
+            For Each myReportObject In myReportObjects
+                If myReportObject.Kind = ReportObjectKind.SubreportObject Then
+                    Dim mySubReportObject As SubreportObject = CType(MyReportObject, SubreportObject)
+                    Dim subReportDocument As ReportDocument = MySubReportObject.OpenSubreport(MySubReportObject.SubreportName)
+                    SetDbLogonForReport(myConnectionInfo, subReportDocument)
+                End If
+            Next
+        Next
+    End Sub
+    Protected Sub CrystalReportViewer1_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles CRQualidade.Init
+
+        Dim sUser As String = System.Configuration.ConfigurationManager.AppSettings("DataBaseUser")
+        Dim sPassw As String = System.Configuration.ConfigurationManager.AppSettings("DataBasePassWord")
+        Dim sServer As String = System.Configuration.ConfigurationManager.AppSettings("DataBaseServer")
+        Dim sDatabase As String = System.Configuration.ConfigurationManager.AppSettings("InitialCatalog")
+
+        Dim dt_inicio As String
+        Dim dt_fim As String
+
+
+        Dim myConnectionInfo As ConnectionInfo = New ConnectionInfo()
+
+        If Not (Request("dt_referencia") Is Nothing) Then
+            ViewState.Item("dt_referencia") = Request("dt_referencia")
+            'dt_inicio = Request("dt_referencia")
+            'dt_fim = DateAdd(DateInterval.Day, -1, DateAdd(DateInterval.Month, 1, Convert.ToDateTime(dt_inicio)))
+        End If
+
+        sPassw = DecryptString(sPassw)
+        myConnectionInfo.ServerName = sServer
+        myConnectionInfo.DatabaseName = sDatabase
+        myConnectionInfo.UserID = sUser
+        myConnectionInfo.Password = sPassw
+
+        SetDbLogonForReport(myConnectionInfo, CrystalReportSource8.ReportDocument)
+        SetDbLogonForSubreports(myConnectionInfo, CrystalReportSource8.ReportDocument)
+        CrystalReportSource8.ReportDocument.VerifyDatabase()  'verifica se o banco esta ok
+
+
+        Dim currentParameterValues As ParameterValues = New ParameterValues()
+        Dim myParameterDiscreteValue As ParameterDiscreteValue = New ParameterDiscreteValue()
+        Dim myParameterDiscreteValue1 As ParameterDiscreteValue = New ParameterDiscreteValue()
+        Dim myParameterDiscreteValue2 As ParameterDiscreteValue = New ParameterDiscreteValue()  ' 20/08/2009 - Rls18
+        Dim myParameterFieldDefinitions As ParameterFieldDefinitions = CrystalReportSource8.ReportDocument.DataDefinition.ParameterFields
+
+
+        'Dim myParamGrupo As ParameterFieldDefinition = myParameterFieldDefinitions("grupo")
+        'myParameterDiscreteValue.Value = "1"
+        'currentParameterValues.Add(myParameterDiscreteValue)
+        'myParamGrupo.ApplyCurrentValues(currentParameterValues)
+        'currentParameterValues.Clear()
+
+
+        Dim myParamData As ParameterFieldDefinition = myParameterFieldDefinitions("@dt_referencia")
+        'myParameterDiscreteValue.Value = "01/10/2008"
+        myParameterDiscreteValue.Value = ViewState.Item("dt_referencia").ToString
+        currentParameterValues.Add(myParameterDiscreteValue)
+        myParamData.ApplyCurrentValues(currentParameterValues)
+        'currentParameterValues.Clear()
+
+        Dim myParamData1 As ParameterFieldDefinition = myParameterFieldDefinitions("@dt_referencia_analise")
+        'myParameterDiscreteValue.Value = "01/10/2008"
+        myParameterDiscreteValue1.Value = ViewState.Item("dt_referencia").ToString
+        currentParameterValues.Add(myParameterDiscreteValue1)
+        myParamData1.ApplyCurrentValues(currentParameterValues)
+        currentParameterValues.Clear()
+
+        ' 20/08/2009 - Rls18 - i
+        Dim myParamData2 As ParameterFieldDefinition = myParameterFieldDefinitions("@dt_referencia_pagto")
+        myParameterDiscreteValue2.Value = ViewState.Item("dt_referencia").ToString
+        currentParameterValues.Add(myParameterDiscreteValue2)
+        myParamData2.ApplyCurrentValues(currentParameterValues)
+        currentParameterValues.Clear()
+        ' 20/08/2009 - Rls18 - f
+
+
+        'Dim myParamDataIni As ParameterFieldDefinition = myParameterFieldDefinitions("@dt_inicio")
+        ''myParameterDiscreteValue.Value = "01/10/2008"
+        'myParameterDiscreteValue.Value = dt_inicio
+        'currentParameterValues.Add(myParameterDiscreteValue)
+        'myParamData.ApplyCurrentValues(currentParameterValues)
+        'currentParameterValues.Clear()
+
+        'Dim myParamDataFim As ParameterFieldDefinition = myParameterFieldDefinitions("@dt_fim")
+        ''myParameterDiscreteValue.Value = "01/10/2008"
+        'myParameterDiscreteValue.Value = dt_fim
+        'currentParameterValues.Add(myParameterDiscreteValue)
+        'myParamData.ApplyCurrentValues(currentParameterValues)
+        'currentParameterValues.Clear()
+
+        ' 22/01/2009 - Rls15 - i
+        'Me.CRQualidade.ReportSource = Server.MapPath("extrato_qualidade.rpt")
+        Dim lnomearquivo As String
+        lnomearquivo = System.Configuration.ConfigurationManager.AppSettings("PathReports").ToString() & "\extrato_qualidade.rpt"
+        Me.CRQualidade.ReportSource = lnomearquivo
+        ' 22/01/2009 - Rls15 - f
+
+
+        'Me.CRQualidade.ReportSource = "C:\Inetpub\wwwroot\Danone\extrato_qualidade.rpt"   ' 20/01/2009 - Testar com caminho da produção 
+        Me.CRQualidade.DataBind()
+    End Sub
+
+
+
+
+
+
+    Public Function App_Path() As String
+        Return System.AppDomain.CurrentDomain.BaseDirectory()
+    End Function
+
+    Private Sub InitializeComponent()
+        Me.backgroundWorker1 = New System.ComponentModel.BackgroundWorker
+
+    End Sub
+
+    Protected Sub CrystalReportSource8_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles CrystalReportSource8.Init
+
+    End Sub
+End Class
