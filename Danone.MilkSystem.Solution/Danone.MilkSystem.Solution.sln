@@ -1,12 +1,15 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\Danone.MilkSystem.Web\", "..\Danone.MilkSystem.Web\", "{6F737270-641E-45C8-8B5E-A620350339DA}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Danone.MilkSystem.Web", "..\Danone.MilkSystem.Web\", "{6F737270-641E-45C8-8B5E-A620350339DA}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = ""
 		SccAuxPath = ""
 		SccLocalPath = ""
 		SccProvider = ""
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv2.0"
 		ProjectReferences = "{0DFA00D5-1F9D-4AFA-92C9-881D408099EC}|Danone.MilkSystem.Business.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/Danone"
 		Debug.AspNetCompiler.PhysicalPath = "..\Danone.MilkSystem.Web\"
@@ -26,10 +29,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\Danone.MilkSystem.We
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Danone.MilkSystem.Business", "..\Danone.MilkSystem.Business\Danone.MilkSystem.Business.vbproj", "{0DFA00D5-1F9D-4AFA-92C9-881D408099EC}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

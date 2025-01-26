@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0DFA00D5-1F9D-4AFA-92C9-881D408099EC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Danone.MilkSystem.Business</RootNamespace>
+    <AssemblyName>Danone.MilkSystem.Business</AssemblyName>
+    <MyType>Windows</MyType>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Danone.MilkSystem.Business.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Danone.MilkSystem.Business.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RK.DataEngine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bibliotecas\RK.DataEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="RK.GenericParameters, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bibliotecas\RK.GenericParameters.dll</HintPath>
+    </Reference>
+    <Reference Include="RK.GlobalTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bibliotecas\RK.GlobalTools.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnaliseEsalq.vb" />
+    <Compile Include="Balanca.vb" />
+    <Compile Include="Banco.vb" />
+    <Compile Include="CalculoProdutor.vb" />
+    <Compile Include="CategoriaQualidade.vb" />
+    <Compile Include="Cidade.vb" />
+    <Compile Include="Analise.vb" />
+    <Compile Include="CodigoEsalq.vb" />
+    <Compile Include="Compartimento.vb" />
+    <Compile Include="Comodato.vb" />
+    <Compile Include="Conta.vb" />
+    <Compile Include="ContaParcelada.vb" />
+    <Compile Include="CalculoExecucao.vb" />
+    <Compile Include="Caderneta.vb" />
+    <Compile Include="AnaliseLogica.vb" />
+    <Compile Include="Adiantamento.vb" />
+    <Compile Include="ColetaPlacas.vb" />
+    <Compile Include="AnaliseEsalqErro.vb" />
+    <Compile Include="Canal.vb" />
+    <Compile Include="CategoriaItem.vb" />
+    <Compile Include="Cluster.vb" />
+    <Compile Include="AnaliseEsalqImportacaoItens.vb" />
+    <Compile Include="AnaliseEsalqAprovacao.vb" />
+    <Compile Include="AnaliseEsalqSituacao.vb" />
+    <Compile Include="AnaliseEsalqTipoColeta.vb" />
+    <Compile Include="ContratoAdicionalVolume.vb" />
+    <Compile Include="Contrato.vb" />
+    <Compile Include="ContratoValidade.vb" />
+    <Compile Include="ColetaAmostraPeriodo.vb" />
+    <Compile Include="ColetaAmostra.vb" />
+    <Compile Include="ColetaAmostraManual.vb" />
+    <Compile Include="ColetaAmostraFrasco.vb" />
+    <Compile Include="AnaliseEsalqProtocolo.vb" />
+    <Compile Include="CalculoJuros.vb" />
+    <Compile Include="CEP.vb" />
+    <Compile Include="CIQDocumentos.vb" />
+    <Compile Include="CentralContrato.vb" />
+    <Compile Include="CentralNotas.vb" />
+    <Compile Include="CentralNotasAnexo.vb" />
+    <Compile Include="CentralContratoPropriedade.vb" />
+    <Compile Include="CalculoFrete.vb" />
+    <Compile Include="CalculoFreteTransportadorAnexo.vb" />
+    <Compile Include="Resfriamento.vb" />
+    <Compile Include="SituacaoRomaneioSaidaNota.vb" />
+    <Compile Include="RomaneioSaidaNotaAnexo.vb" />
+    <Compile Include="RomaneioSaidaNota.vb" />
+    <Compile Include="RomaneioSaidaAnaliseAnexo.vb" />
+    <Compile Include="RomaneioSaidaAnaliseCompartimento.vb" />
+    <Compile Include="RomaneioSaidaCompartimento.vb" />
+    <Compile Include="FretePeriodo.vb" />
+    <Compile Include="FreteLancamento.vb" />
+    <Compile Include="FreteConta.vb" />
+    <Compile Include="FreteTabela.vb" />
+    <Compile Include="RomaneioSaidaPlaca.vb" />
+    <Compile Include="RomaneioAnexo.vb" />
+    <Compile Include="TipoAnexo.vb" />
+    <Compile Include="RomaneioAnaliseAnexo.vb" />
+    <Compile Include="MotivoSaida.vb" />
+    <Compile Include="TipoOperacao.vb" />
+    <Compile Include="RomaneioSaida.vb" />
+    <Compile Include="SituacaoRomaneioSaida.vb" />
+    <Compile Include="RomaneioNotasAnexo.vb" />
+    <Compile Include="RomaneioNotas.vb" />
+    <Compile Include="PedidoAnexos.vb" />
+    <Compile Include="InterrupcaoFornecimentoPedidos.vb" />
+    <Compile Include="PedidoNotas.vb" />
+    <Compile Include="SituacaoCentralNotas.vb" />
+    <Compile Include="PreRomaneioTransvaseAmostra.vb" />
+    <Compile Include="Transvase.vb" />
+    <Compile Include="TransvaseCompartimento.vb" />
+    <Compile Include="TransvasePreRomaneio.vb" />
+    <Compile Include="TransvaseUProducao.vb" />
+    <Compile Include="TransvaseVeiculo.vb" />
+    <Compile Include="SituacaoTransvase.vb" />
+    <Compile Include="CustoFinanceiro.vb" />
+    <Compile Include="MotivoResponsavelCIQ.vb" />
+    <Compile Include="ImportacaoLancamentoErro.vb" />
+    <Compile Include="ImportacaoLancamento.vb" />
+    <Compile Include="ImportacaoPedidoErro.vb" />
+    <Compile Include="ImportacaoPedido.vb" />
+    <Compile Include="PreRomaneioAmostra.vb" />
+    <Compile Include="MotivoDescarteRomaneioAmostra.vb" />
+    <Compile Include="SituacaoRomaneioAmostra.vb" />
+    <Compile Include="MotivoNaoColetaAmostra.vb" />
+    <Compile Include="SituacaoColetaAmostra.vb" />
+    <Compile Include="SituacaoColetaAmostraManual.vb" />
+    <Compile Include="TipoFrasco.vb" />
+    <Compile Include="ExceptionRK.vb" />
+    <Compile Include="TipoLog.vb" />
+    <Compile Include="UsuarioLog.vb" />
+    <Compile Include="GrupoPropriedades.vb" />
+    <Compile Include="GrupoAcessoProcesso.vb" />
+    <Compile Include="PessoaContrato.vb" />
+    <Compile Include="PoupancaMotivoBonusConcessao.vb" />
+    <Compile Include="ParametroAntecipacao.vb" />
+    <Compile Include="IndicadorPreco.vb" />
+    <Compile Include="IndicadorTipo.vb" />
+    <Compile Include="PoupancaParametroCategoria.vb" />
+    <Compile Include="SituacaoContrato.vb" />
+    <Compile Include="LinhaPedagio.vb" />
+    <Compile Include="TabelaFreteVeiculos.vb" />
+    <Compile Include="TransitPointPreRomaneio.vb" />
+    <Compile Include="TransitPointVeiculo.vb" />
+    <Compile Include="TransitPointCompartimento.vb" />
+    <Compile Include="TransitPointUProducao.vb" />
+    <Compile Include="TransitPoint.vb" />
+    <Compile Include="SituacaoTransitPoint.vb" />
+    <Compile Include="FaixaQualidadeComplience.vb" />
+    <Compile Include="GrupoRelacionamento.vb" />
+    <Compile Include="LinhaAtividades.vb" />
+    <Compile Include="PoupancaAdesao.vb" />
+    <Compile Include="PoupancaCalculoExecucao.vb" />
+    <Compile Include="Poupanca.vb" />
+    <Compile Include="PoupancaParametro.vb" />
+    <Compile Include="PoupancaParametroQualidade.vb" />
+    <Compile Include="SituacaoPoupanca.vb" />
+    <Compile Include="ExtratoQualidadeWeb.vb" />
+    <Compile Include="SequenceFreteColeta.vb" />
+    <Compile Include="GoldCusto.vb" />
+    <Compile Include="GoldCustoCrescimento.vb" />
+    <Compile Include="GoldCustoEficiencia.vb" />
+    <Compile Include="GoldCustoMargem.vb" />
+    <Compile Include="GoldCustoProdutor.vb" />
+    <Compile Include="GoldCustoProdutorDieta.vb" />
+    <Compile Include="GoldCustoProdutorOperacional.vb" />
+    <Compile Include="GoldCustoProdutorOperacionalItem.vb" />
+    <Compile Include="GoldCustoVolume.vb" />
+    <Compile Include="GoldFaixaCrescimento.vb" />
+    <Compile Include="GoldFaixaCusto.vb" />
+    <Compile Include="GoldFaixaEficiencia.vb" />
+    <Compile Include="GoldFaixaVolume.vb" />
+    <Compile Include="GoldPrecoLeite.vb" />
+    <Compile Include="PedidoObservacao.vb" />
+    <Compile Include="PrazoPagto.vb" />
+    <Compile Include="PagtoTransportador.vb" />
+    <Compile Include="ImportacaoPagtoTransportador.vb" />
+    <Compile Include="ImportacaoPagtoTransportadorErro.vb" />
+    <Compile Include="Densidade.vb" />
+    <Compile Include="POAgropecuaria.vb" />
+    <Compile Include="PropriedadeComodato.vb" />
+    <Compile Include="TipoOperador.vb" />
+    <Compile Include="TipoPesagem.vb" />
+    <Compile Include="TransferenciaVolume.vb" />
+    <Compile Include="ExportacaoBatch.vb" />
+    <Compile Include="POCooperativa.vb" />
+    <Compile Include="POProdutor.vb" />
+    <Compile Include="RegistroExportacaoBatch.vb" />
+    <Compile Include="TipoNotaFiscal.vb" />
+    <Compile Include="ImportacaoFreteErro.vb" />
+    <Compile Include="ImportacaoFrete.vb" />
+    <Compile Include="InterrupcaoFornecimento.vb" />
+    <Compile Include="PedidoCancelarMotivo.vb" />
+    <Compile Include="SituacaoCotacaoItem.vb" />
+    <Compile Include="PropriedadeTanque.vb" />
+    <Compile Include="RelatorioMotor.vb" />
+    <Compile Include="SituacaoPedido.vb" />
+    <Compile Include="Cotacao.vb" />
+    <Compile Include="CotacaoFornecedor.vb" />
+    <Compile Include="CotacaoItem.vb" />
+    <Compile Include="GrupoItens.vb" />
+    <Compile Include="GrupoPoolCompras.vb" />
+    <Compile Include="GrupoPoolComprasPropriedade.vb" />
+    <Compile Include="ItemParceiro.vb" />
+    <Compile Include="JustificativaCentral.vb" />
+    <Compile Include="PedidoDescontoProdutor.vb" />
+    <Compile Include="PedidoEntrega.vb" />
+    <Compile Include="PedidoItem.vb" />
+    <Compile Include="PedidoPagtoFornecedor.vb" />
+    <Compile Include="Pedido.vb" />
+    <Compile Include="ExportacaoFreteExecucao.vb" />
+    <Compile Include="NaoConformidades.vb" />
+    <Compile Include="SituacaoCotacao.vb" />
+    <Compile Include="TabelaFrete.vb" />
+    <Compile Include="TabelaPrecos.vb" />
+    <Compile Include="TipoEquipamento.vb" />
+    <Compile Include="ExportaAnalise.vb" />
+    <Compile Include="ExportaVolume.vb" />
+    <Compile Include="NotaFiscalExel.vb" />
+    <Compile Include="SaldoDisponivel.vb" />
+    <Compile Include="TransitPointUnidade.vb" />
+    <Compile Include="UnidadeMedida.vb" />
+    <Compile Include="Utilitario.vb" />
+    <Compile Include="FaixaPagamentoProdutor.vb" />
+    <Compile Include="MenuItem.vb" />
+    <Compile Include="NotaFiscalMensagem.vb" />
+    <Compile Include="NotaFiscalMensagem_Estado.vb" />
+    <Compile Include="TipoAcesso.vb" />
+    <Compile Include="Menu.vb" />
+    <Compile Include="GrupoAcesso.vb" />
+    <Compile Include="UsuarioGrupo.vb" />
+    <Compile Include="GrupoCadastro.vb" />
+    <Compile Include="TipoUsuario.vb" />
+    <Compile Include="Usuario.vb" />
+    <Compile Include="ItemNotaFiscal.vb" />
+    <Compile Include="DuplicataNotaFiscal.vb" />
+    <Compile Include="NotaFiscal.vb" />
+    <Compile Include="NaturezaOperacao.vb" />
+    <Compile Include="FreteNotaFiscal.vb" />
+    <Compile Include="EspecieNotaFiscal.vb" />
+    <Compile Include="TributacaoNotaFiscal.vb" />
+    <Compile Include="StatusRomaneio.vb" />
+    <Compile Include="MotivoNaoColeta.vb" />
+    <Compile Include="TipoNotificacao.vb" />
+    <Compile Include="Notificacao.vb" />
+    <Compile Include="StatusResultadoAnalise.vb" />
+    <Compile Include="RomaneioPlaca.vb" />
+    <Compile Include="RomaneioLacre.vb" />
+    <Compile Include="MapaLeite.vb" />
+    <Compile Include="PrecoNegociadoCooperativa.vb" />
+    <Compile Include="Motorista.vb" />
+    <Compile Include="StatusPrecoNegociado.vb" />
+    <Compile Include="FaixaReferenciaLogica.vb" />
+    <Compile Include="ProprietarioEquipamento.vb" />
+    <Compile Include="UnidadeProducaoComodato.vb" />
+    <Compile Include="VeiculoCentralCompras.vb" />
+    <Compile Include="Voltagem.vb" />
+    <Compile Include="PropriedadeMotivoInativacao.vb" />
+    <Compile Include="FormatoAnalise.vb" />
+    <Compile Include="TipoAnalise.vb" />
+    <Compile Include="StatusAdiantamento.vb" />
+    <Compile Include="RomaneioAnaliseUProducao.vb" />
+    <Compile Include="RomaneioAnaliseCompartimento.vb" />
+    <Compile Include="Portador.vb" />
+    <Compile Include="JustificativaAdiantamento.vb" />
+    <Compile Include="Importacao.vb" />
+    <Compile Include="ImportacaoLog.vb" />
+    <Compile Include="Linha.vb" />
+    <Compile Include="LinhaItens.vb" />
+    <Compile Include="StatusAnalise.vb" />
+    <Compile Include="FaixaIncentivoFiscal.vb" />
+    <Compile Include="FichaFinanceira.vb" />
+    <Compile Include="FaixaQualidade.vb" />
+    <Compile Include="FaixaVolume.vb" />
+    <Compile Include="Lancamento.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NaturezaConta.vb" />
+    <Compile Include="Parametro.vb" />
+    <Compile Include="PrecoAdicionalMercado.vb" />
+    <Compile Include="PrecoAdicionalRegiao.vb" />
+    <Compile Include="PrecoAdicionalVolume.vb" />
+    <Compile Include="PrecoBase.vb" />
+    <Compile Include="PrecoJustificativa.vb" />
+    <Compile Include="PrecoNegociado.vb" />
+    <Compile Include="PrecoObjetivo.vb" />
+    <Compile Include="PropriedadeTreinamento.vb" />
+    <Compile Include="Romaneio.vb" />
+    <Compile Include="RomaneioAnaliseGlobal.vb" />
+    <Compile Include="Romaneio_Compartimento.vb" />
+    <Compile Include="Romaneio_Comp_UProducao.vb" />
+    <Compile Include="TipoBem.vb" />
+    <Compile Include="Silo.vb" />
+    <Compile Include="Item.vb" />
+    <Compile Include="UnidadeProducao.vb" />
+    <Compile Include="Veiculo.vb" />
+    <Compile Include="Treinamento.vb" />
+    <Compile Include="Propriedade.vb" />
+    <Compile Include="Tecnico.vb" />
+    <Compile Include="Estabelecimento.vb" />
+    <Compile Include="Estado.vb" />
+    <Compile Include="GrauInstrucao.vb" />
+    <Compile Include="Grupo.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Nacionalidade.vb" />
+    <Compile Include="Pessoa.vb" />
+    <Compile Include="PessoaSituacao.vb" />
+    <Compile Include="Situacao.vb" />
+    <Compile Include="TipoConta.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
